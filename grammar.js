@@ -13,7 +13,8 @@ module.exports = grammar({
     ),
 
     simple_definition: $ => choice(
-      $.import_definition
+      $.import_definition,
+      $.assign_definition
     ),
 
     import_definition: $ => seq(
@@ -34,7 +35,53 @@ module.exports = grammar({
     as_name: $ => seq(
       'as',
       $.identifier
-    )
+    ),
+
+    assign_definition: $ => choice(
+      $.assign,
+      $.augmented_assign,
+    ),
+
+    // TODO(wei): should be typed
+    test: _ => /[a-zA-Z0-9."']+/,
+
+    assign: $ => seq(
+      choice(
+        $.identifier,
+        seq(
+          $.identifier,
+          repeat(seq(DOT, $.identifier)),
+        ),
+      ),
+      '=',
+      $.test,
+    ),
+
+    augassign: _ => choice("+=",
+      "-=",
+      "*=",
+      "**=",
+      "/=",
+      "//=",
+      "%=",
+      "&=",
+      "|=",
+      "^=",
+      "<<=",
+      ">>=",
+    ),
+
+    augmented_assign: $ => seq(
+      choice(
+        $.identifier,
+        seq(
+          $.identifier,
+          repeat(seq(DOT, $.identifier)),
+        ),
+      ),
+      $.augassign,
+      $.test,
+    ),
 
   }
 });

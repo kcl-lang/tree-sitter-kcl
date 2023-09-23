@@ -1,0 +1,46 @@
+==================
+assign statements
+==================
+
+k = 1
+
+---
+
+(source_file
+  (simple_definition
+    (assign_definition
+      (assign
+        (identifier)
+        (test)))))
+
+==================
+assign statements with select dots
+==================
+
+a.b = "a.b"
+
+---
+
+(source_file
+  (simple_definition
+    (assign_definition
+      (assign
+        (identifier)
+        (identifier)
+        (test)))))
+
+==================
+augmented assign statements
+==================
+
+k += 1
+
+---
+
+(source_file
+  (simple_definition
+    (assign_definition
+      (augmented_assign
+        (identifier)
+        (augassign)
+        (test)))))
