@@ -15,6 +15,72 @@
     }
   },
   {
+    "type": "assign",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "test",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "assign_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "assign",
+          "named": true
+        },
+        {
+          "type": "augmented_assign",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "augassign",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "augmented_assign",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "augassign",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "test",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "import_definition",
     "named": true,
     "fields": {},
@@ -66,6 +132,10 @@
       "required": true,
       "types": [
         {
+          "type": "assign_definition",
+          "named": true
+        },
+        {
           "type": "import_definition",
           "named": true
         }
@@ -88,7 +158,55 @@
     }
   },
   {
+    "type": "%=",
+    "named": false
+  },
+  {
+    "type": "&=",
+    "named": false
+  },
+  {
+    "type": "**=",
+    "named": false
+  },
+  {
+    "type": "*=",
+    "named": false
+  },
+  {
+    "type": "+=",
+    "named": false
+  },
+  {
+    "type": "-=",
+    "named": false
+  },
+  {
     "type": ".",
+    "named": false
+  },
+  {
+    "type": "//=",
+    "named": false
+  },
+  {
+    "type": "/=",
+    "named": false
+  },
+  {
+    "type": "<<=",
+    "named": false
+  },
+  {
+    "type": "=",
+    "named": false
+  },
+  {
+    "type": ">>=",
+    "named": false
+  },
+  {
+    "type": "^=",
     "named": false
   },
   {
@@ -101,6 +219,14 @@
   },
   {
     "type": "import",
+    "named": false
+  },
+  {
+    "type": "test",
+    "named": true
+  },
+  {
+    "type": "|=",
     "named": false
   }
 ]
