@@ -1,0 +1,29 @@
+{
+  "name": "tree-sitter-kcl",
+  "version": "0.1.0",
+  "description": "A tree-sitter grammar for KCL",
+  "main": "bindings/node",
+  "scripts": {
+    "test": "tree-sitter test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kcl-lang/tree-sitter-kcl.git"
+  },
+  "keywords": [
+    "tree-sitter",
+    "kcl"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/kcl-lang/tree-sitter-kcl/issues"
+  },
+  "homepage": "https://github.com/kcl-lang/tree-sitter-kcl#readme",
+  "dependencies": {
+    "nan": "^2.18.0"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.20.8"
+  }
+}
