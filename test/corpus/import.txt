@@ -1,68 +1,61 @@
-==================
+================================================================================
 import statements
-==================
+================================================================================
 
 import k8s.api
 
----
+--------------------------------------------------------------------------------
 
-(source_file
-  (simple_definition
-    (import_definition
-      (pkg_name
-        (identifier)
-          (identifier)))))
+(module
+  (import_statement
+    (dotted_name
+      (identifier)
+      (identifier))))
 
-==================
+================================================================================
 import statements with leading dot
-==================
+================================================================================
 
 import ..local.api
 
----
+--------------------------------------------------------------------------------
 
-(source_file
-  (simple_definition
-    (import_definition
-      (pkg_name
-        (leading_dot)
-          (identifier)
-            (identifier)))))
+(module
+  (import_statement
+    (import_prefix)
+    (dotted_name
+      (identifier)
+      (identifier))))
 
-
-==================
+================================================================================
 import statements with as name
-==================
+================================================================================
 
 import k8s.api as k8s
 
----
+--------------------------------------------------------------------------------
 
-(source_file
-  (simple_definition
-    (import_definition
-      (pkg_name
+(module
+  (import_statement
+    (aliased_import
+      (dotted_name
         (identifier)
         (identifier))
-      (as_name
-        (identifier)))))
+      (identifier))))
 
-
-
-==================
+================================================================================
 import statements with as name and leading dots
-==================
+================================================================================
 
 import ..local.api as local
 
----
+--------------------------------------------------------------------------------
 
-(source_file
-  (simple_definition
-    (import_definition
-      (pkg_name
-        (leading_dot)
-          (identifier)
-          (identifier))
-        (as_name
-          (identifier)))))
+(module
+  (import_statement
+    (import_prefix)
+    (aliased_import
+      (dotted_name
+        (identifier)
+        (identifier))
+      (identifier))))
