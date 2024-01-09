@@ -40,7 +40,19 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "expression_statement"
+          "name": "expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "assignment"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "augmented_assignment"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "unification"
         },
         {
           "type": "SYMBOL",
@@ -187,27 +199,6 @@
               "type": "BLANK"
             }
           ]
-        }
-      ]
-    },
-    "expression_statement": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "assignment"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "augmented_assignment"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "unification"
         }
       ]
     },
@@ -2891,6 +2882,79 @@
                 "content": {
                   "type": "PATTERN",
                   "value": "[0-9]+_?"
+                }
+              },
+              {
+                "type": "FIELD",
+                "name": "multiplier",
+                "content": {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "STRING",
+                          "value": "n"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "u"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "m"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "k"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "K"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "M"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "G"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "T"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "P"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "Ki"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "Mi"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "Gi"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "Ti"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "Pi"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
                 }
               }
             ]

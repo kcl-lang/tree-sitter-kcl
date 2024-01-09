@@ -195,7 +195,10 @@ module.exports = grammar({
     ),
 
     _simple_statement: $ => choice(
-      $.expression_statement,
+      $.expression,
+      $.assignment,
+      $.augmented_assignment,
+      $.unification,
       $.import_statement,
       $.assert_statement,
       $.type_alias_statement,
@@ -227,13 +230,6 @@ module.exports = grammar({
       $.expression,
       optional(seq('if', $.expression)),
       optional(seq(',', $.expression))
-    ),
-
-    expression_statement: $ => choice(
-      $.expression,
-      $.assignment,
-      $.augmented_assignment,
-      $.unification,
     ),
 
     // Compound statements
@@ -705,7 +701,7 @@ module.exports = grammar({
       ),
       seq(
         repeat1(/[0-9]+_?/),
-        //optional($.multiplier),
+        field('multiplier', optional(choice('n', 'u', 'm', 'k', 'K', 'M', 'G', 'T', 'P', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'))),
       ),
     )),
 
