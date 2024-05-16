@@ -7,27 +7,32 @@ assert 1==2 , "Wrong"
 --------------------------------------------------------------------------------
 
 (module
-  (assert_statement
-    (comparison_operator
-      (integer)
-      (integer))
-    (string)))
+      (assert_statement
+        (comparison_operator
+          (integer)
+          (integer))
+        (string
+          (string_start)
+          (string_content)
+          (string_end))))
 
 ================================================================================
 assert statements with 'if' condition
 ================================================================================
 
-assert a == b if True, "error message"
+assert 1 == 2 if True, "error message"
 
 --------------------------------------------------------------------------------
 
 (module
-  (assert_statement
-    (if_statement
-      (true)
+  (if_statement
+    (true)
+    (assert_statement
       (comparison_operator
-      (integer)
-      (integer))
-      (string)
-      )
-    ))
+        (integer)
+        (integer))
+      (string
+        (string_start)
+        (string_content)
+        (string_end)))
+  ))
