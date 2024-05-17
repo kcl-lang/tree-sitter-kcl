@@ -84,4 +84,22 @@ print("hello world", end="")
           (string_start)
           (string_end))))))
 
+================================================================================
+Comprehensions
+================================================================================
 
+[x * x for x in range(5)] 
+
+--------------------------------------------------------------------------------
+
+(module
+      (list_comprehension
+        (binary_operator
+          (identifier)
+          (identifier))
+        (for_in_clause
+          (identifier)
+          (call
+            (identifier)
+            (argument_list
+              (integer))))))

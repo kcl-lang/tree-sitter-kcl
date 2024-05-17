@@ -1,5 +1,5 @@
 ================================================================================
-assert statements with error message
+assert logic with error message
 ================================================================================
 
 assert 1==2 , "Wrong"
@@ -17,22 +17,23 @@ assert 1==2 , "Wrong"
           (string_end))))
 
 ================================================================================
-assert statements with 'if' condition
+assert logic with 'if' condition
 ================================================================================
 
-assert 1 == 2 if True, "error message"
+assert 1 == 2 if 3 > 2, "error message"
 
 --------------------------------------------------------------------------------
 
 (module
-  (if_statement
-    (true)
-    (assert_statement
-      (comparison_operator
-        (integer)
-        (integer))
-      (string
-        (string_start)
-        (string_content)
-        (string_end)))
-  ))
+      (assert_statement
+        (comparison_operator
+          (integer)
+          (integer))
+        (comparison_operator
+          (integer)
+          (integer))
+        (string
+          (string_start)
+          (string_content)
+          (string_end))))
+
