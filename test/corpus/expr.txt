@@ -14,8 +14,6 @@ binary expression
     (binary_operator
       (integer)
       (integer))))
-<<<<<<< HEAD
-=======
 
 ================================================================================
 unary expression
@@ -63,4 +61,27 @@ x = True if enabled else False
       (true)
       (identifier)
       (false))))
->>>>>>> 92ccd5c (Added tests for expression)
+
+================================================================================
+function invocation
+================================================================================
+
+print("hello world", end="")
+
+--------------------------------------------------------------------------------
+
+(module
+  (call
+    (identifier)
+    (argument_list
+      (string
+        (string_start)
+        (string_content)
+        (string_end))
+      (keyword_argument
+        (identifier)
+        (string
+          (string_start)
+          (string_end))))))
+
+
