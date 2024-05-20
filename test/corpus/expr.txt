@@ -103,3 +103,140 @@ Comprehensions
             (identifier)
             (argument_list
               (integer))))))
+
+================================================================================
+selector expression
+================================================================================
+
+myDict = {key = "value"}
+result = myDict.key
+
+--------------------------------------------------------------------------------
+
+(module
+      (assignment
+        (dotted_name
+          (identifier))
+        (dictionary
+          (pair
+            (identifier)
+            (string
+              (string_start)
+              (string_content)
+              (string_end)))))
+      (ERROR
+        (dotted_name
+          (identifier))
+        (dotted_name
+          (identifier)
+          (identifier))))
+
+================================================================================
+selector expression with ? operator
+================================================================================
+
+data = {key = "value"}
+a = data?.key     
+b = data?.name
+
+--------------------------------------------------------------------------------
+
+(module
+      (assignment
+        (dotted_name
+          (identifier))
+        (dictionary
+          (pair
+            (identifier)
+            (string
+              (string_start)
+              (string_content)
+              (string_end)))))
+      (ERROR
+        (dotted_name
+          (identifier))
+        (dotted_name
+          (identifier)
+          (ERROR
+            (UNEXPECTED '?'))
+          (identifier)
+          (ERROR
+            (identifier)
+            (identifier)
+            (UNEXPECTED '?'))
+          (identifier))))
+
+================================================================================
+quantifier map expression
+================================================================================
+
+b = map k, v in {a = "foo", b = "bar"} { v } 
+
+--------------------------------------------------------------------------------
+
+(module
+      (assignment
+        (dotted_name
+          (identifier))
+        (comparison_operator
+          (identifier)
+          (ERROR
+            (identifier)
+            (identifier))
+          (dictionary
+            (pair
+              (identifier)
+              (string
+                (string_start)
+                (string_content)
+                (string_end)))
+            (pair
+              (identifier)
+              (string
+                (string_start)
+                (string_content)
+                (string_end))))))
+      (MISSING _newline)
+      (dictionary
+        (ERROR
+          (identifier))))
+
+================================================================================
+quantifier filter expression
+================================================================================
+
+d = filter _, v in {a = "foo", b = "bar"} {v == "foo"}
+
+--------------------------------------------------------------------------------
+
+(module
+      (assignment
+        (dotted_name
+          (identifier))
+        (comparison_operator
+          (identifier)
+          (ERROR
+            (identifier)
+            (identifier))
+          (dictionary
+            (pair
+              (identifier)
+              (string
+                (string_start)
+                (string_content)
+                (string_end)))
+            (pair
+              (identifier)
+              (string
+                (string_start)
+                (string_content)
+                (string_end))))))
+      (MISSING _newline)
+      (dictionary
+        (ERROR
+          (comparison_operator
+            (identifier)
+            (string
+              (string_start)
+              (string_content)
+              (string_end))))))
