@@ -1,39 +1,46 @@
 ================================================================================
-assert logic with error message
+assert statements
 ================================================================================
 
-assert 1==2 , "Wrong"
+assert x > 1
+
+--------------------------------------------------------------------------------
+
+(module
+    (assert_statement
+    (comparison_operator
+        (identifier)
+        (integer))))
+
+================================================================================
+assert statements using if expression
+================================================================================
+
+assert a > 2 if a
+
+--------------------------------------------------------------------------------
+
+(module
+    (assert_statement
+    (comparison_operator
+        (identifier)
+        (integer))
+    (identifier)))
+
+================================================================================
+assert statements with error message
+================================================================================
+
+assert a == b, "SOS"
 
 --------------------------------------------------------------------------------
 
 (module
       (assert_statement
         (comparison_operator
-          (integer)
-          (integer))
+          (identifier)
+          (identifier))
         (string
           (string_start)
           (string_content)
           (string_end))))
-
-================================================================================
-assert logic with 'if' condition
-================================================================================
-
-assert 1 == 2 if 3 > 2, "error message"
-
---------------------------------------------------------------------------------
-
-(module
-      (assert_statement
-        (comparison_operator
-          (integer)
-          (integer))
-        (comparison_operator
-          (integer)
-          (integer))
-        (string
-          (string_start)
-          (string_content)
-          (string_end))))
-

@@ -1,0 +1,22 @@
+================================================================================
+Schema Statement
+================================================================================
+
+schema Person:
+    firstName: str = "John"
+
+--------------------------------------------------------------------------------
+
+(module
+    (schema_statement
+    (identifier)
+    (block
+        (assignment
+        (dotted_name
+            (identifier))
+        (type
+            (basic_type))
+        (string
+            (string_start)
+            (string_content)
+            (string_end))))))
