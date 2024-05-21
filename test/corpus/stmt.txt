@@ -16,7 +16,7 @@ if True: a = 1
         (integer)))))
 
 ================================================================================
-if statement inline
+if statement Basic
 ================================================================================
 
 if True:
@@ -37,3 +37,64 @@ if True:
         (dotted_name
           (identifier))
         (integer)))))
+
+================================================================================
+if statement with else
+================================================================================
+
+if True: 
+  a = 1 
+else: 
+  b = 2
+
+--------------------------------------------------------------------------------
+
+(module
+  (if_statement
+    (true)
+    (block
+      (assignment
+        (dotted_name
+          (identifier))
+        (integer)))
+    (else_clause
+      (block
+        (assignment
+          (dotted_name
+            (identifier))
+          (integer))))))
+
+================================================================================
+if statement with elif and else
+================================================================================
+
+if True:
+  a = 1
+elif False:
+  b = 2
+else:
+  c = 3
+
+--------------------------------------------------------------------------------
+
+(module
+  (if_statement
+    (true)
+    (block
+      (assignment
+        (dotted_name
+          (identifier))
+        (integer)))
+    (elif_clause
+      (false)
+      (block
+        (assignment
+          (dotted_name
+            (identifier))
+          (integer))))
+    (else_clause
+      (block
+        (assignment
+          (dotted_name
+            (identifier))
+          (integer))))))
