@@ -240,3 +240,116 @@ d = filter _, v in {a = "foo", b = "bar"} {v == "foo"}
               (string_start)
               (string_content)
               (string_end))))))
+
+================================================================================
+attribute expression
+================================================================================
+
+schema Person:
+  name: str
+
+person = Person {name: "Alice"}
+name1 = person.name
+
+--------------------------------------------------------------------------------
+
+(module
+  (schema_statement
+        (identifier)
+        (ERROR
+          (dotted_name
+            (identifier))
+          (type
+            (basic_type)))
+        (block))
+      (assignment
+        (dotted_name
+          (identifier))
+        (schema_expr
+          (dotted_name
+            (identifier))
+          (dictionary
+            (pair
+              (identifier)
+              (string
+                (string_start)
+                (string_content)
+                (string_end))))))
+      (ERROR
+        (dotted_name
+          (identifier))
+        (dotted_name
+        (identifier)
+        (identifier))))
+
+================================================================================
+optional attribute expression
+================================================================================
+
+schema Person:
+  name: str
+
+person = Person {name: "Alice"}
+name2 = person?.name
+
+--------------------------------------------------------------------------------
+
+(module
+      (schema_statement
+        (identifier)
+        (ERROR
+          (dotted_name
+            (identifier))
+          (type
+            (basic_type)))
+        (block))
+      (assignment
+        (dotted_name
+          (identifier))
+        (schema_expr
+          (dotted_name
+            (identifier))
+          (dictionary
+            (pair
+              (identifier)
+              (string
+                (string_start)
+                (string_content)
+                (string_end))))))
+      (ERROR
+        (dotted_name
+          (identifier))
+        (dotted_name
+          (identifier)
+          (ERROR
+            (UNEXPECTED '?'))
+            (identifier))))
+
+================================================================================
+optional item expression
+================================================================================
+
+datalist = [[1], 2, 3]
+item = datalist?[0]?
+
+--------------------------------------------------------------------------------
+
+(module
+      (assignment
+        (dotted_name
+          (identifier))
+        (list
+          (list
+            (integer))
+          (integer)
+          (integer)))
+      (ERROR
+        (assignment
+          (dotted_name
+            (identifier))
+          (subscript
+            (identifier)
+            (ERROR
+              (UNEXPECTED '?'))
+            (integer)))
+        (UNEXPECTED '?')))

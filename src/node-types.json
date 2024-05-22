@@ -190,7 +190,15 @@
       {
         "type": "undefined",
         "named": true
-      }
+      },
+      {
+        "type": "optional_attribute",
+        "named": true
+      },
+      {
+        "type": "optional_item",
+        "named": true
+      }  
     ]
   },
   {
@@ -341,6 +349,58 @@
       }
     }
   },
+  {
+    "type": "optional_attribute",
+    "named": true,
+    "fields": {
+      "object": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "primary_expression",
+            "named": true
+          }
+        ]
+      },
+      "attribute": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "optional_item",
+    "named": true,
+    "fields": {
+      "object": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "primary_expression",
+            "named": true
+          }
+        ]
+      },
+      "index": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },  
   {
     "type": "augmented_assignment",
     "named": true,
