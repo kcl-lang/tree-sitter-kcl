@@ -1022,6 +1022,10 @@
         {
           "type": "SYMBOL",
           "name": "optional_item"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "null_coalesce"
         }
       ]
     },
@@ -1929,6 +1933,27 @@
           {
             "type": "STRING",
             "value": "]"
+          }
+        ]
+      }
+    },
+    "null_coalesce": {
+      "type": "PREC",
+      "value": 2,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "expression"
+          },
+          {
+            "type": "STRING",
+            "value": "or"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "expression"
           }
         ]
       }

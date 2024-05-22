@@ -353,3 +353,270 @@ item = datalist?[0]?
               (UNEXPECTED '?'))
             (integer)))
         (UNEXPECTED '?')))
+
+================================================================================
+null coalesce expression
+================================================================================
+
+data = {"name": {"key": "value"}}
+name3 = data?["name"]?["err_key"]?.lower() or "name3_value"
+
+--------------------------------------------------------------------------------
+
+(module
+      (assignment
+        (dotted_name
+          (identifier))
+        (dictionary
+          (pair
+            (string
+              (string_start)
+              (string_content)
+              (string_end))
+            (dictionary
+              (pair
+                (string
+                  (string_start)
+                  (string_content)
+                  (string_end))
+                (string
+                  (string_start)
+                  (string_content)
+                  (string_end)))))))
+      (assignment
+        (dotted_name
+          (identifier))
+        (boolean_operator
+          (call
+            (attribute
+              (subscript
+                (subscript
+                  (identifier)
+                  (ERROR
+                    (UNEXPECTED '?'))
+                  (string
+                    (string_start)
+                    (string_content)
+                    (string_end)))
+                (ERROR
+                  (UNEXPECTED '?'))
+                (string
+                  (string_start)
+                  (string_content)
+                  (string_end)))
+              (ERROR
+                (UNEXPECTED '?'))
+                (identifier))
+            (argument_list))
+            (string
+            (string_start)
+            (string_content)
+            (string_end)))))
+
+================================================================================
+paren expression
+================================================================================
+
+(a + b) * c
+
+--------------------------------------------------------------------------------
+
+(module
+  (binary_operator
+    (paren_expression
+      (binary_operator
+        (identifier)
+        (identifier)))
+    (identifier)))
+
+================================================================================
+boolean expression with 'and' operator
+================================================================================
+
+x = True and False
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (boolean_operator
+      (true)
+      (false))))
+
+================================================================================
+boolean expression with 'or' operator
+================================================================================
+
+y = True or False
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (boolean_operator
+      (true)
+      (false))))
+
+================================================================================
+not operator with boolean expression
+================================================================================
+
+x = not True
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (not_operator
+      (true))))
+
+================================================================================
+not operator with comparison expression
+================================================================================
+
+y = not (1 == 2)
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (not_operator
+      (paren_expression
+        (comparison_operator
+          (integer)
+          (integer))))))
+
+================================================================================
+lambda expression 
+================================================================================
+
+g = lambda x: str(x) -> int: x * 2
+
+--------------------------------------------------------------------------------
+
+(module
+  (ERROR
+    (dotted_name
+      (identifier))
+    (ERROR
+      (identifier))
+    (parameters
+          (identifier))
+        (type
+          (basic_type))
+        (identifier)
+        (integer)))
+
+================================================================================
+Comparison operators
+================================================================================
+
+a = 5 < 10
+b = "apple" == "orange"
+c = 3.14 > 3.14
+d = "hello" != "world"
+e = 10 <= 20
+f = 7 >= 7
+g = x in [1, 2, 3]
+h = y not in ["a", "b", "c"]
+i = x is None
+j = y is not None
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (comparison_operator
+          (integer)
+          (integer)))
+      (assignment
+        (dotted_name
+          (identifier))
+        (comparison_operator
+          (string
+            (string_start)
+            (string_content)
+            (string_end))
+          (string
+            (string_start)
+            (string_content)
+            (string_end))))
+      (assignment
+        (dotted_name
+          (identifier))
+        (comparison_operator
+          (float)
+          (float)))
+      (assignment
+        (dotted_name
+          (identifier))
+          (comparison_operator
+          (string
+            (string_start)
+            (string_content)
+            (string_end))
+          (string
+            (string_start)
+            (string_content)
+            (string_end))))
+      (assignment
+        (dotted_name
+          (identifier))
+      (comparison_operator
+          (integer)
+          (integer)))
+      (assignment
+        (dotted_name
+          (identifier))
+      (comparison_operator
+          (integer)
+          (integer)))
+      (assignment
+        (dotted_name
+          (identifier))
+      (comparison_operator
+          (identifier)
+          (list
+            (integer)
+            (integer)
+            (integer))))
+      (assignment
+        (dotted_name
+          (identifier))
+      (comparison_operator
+          (identifier)
+          (list
+            (string
+              (string_start)
+              (string_content)
+              (string_end))
+            (string
+              (string_start)
+              (string_content)
+              (string_end))
+            (string
+              (string_start)
+              (string_content)
+              (string_end)))))
+      (assignment
+        (dotted_name
+          (identifier))
+        (comparison_operator
+          (identifier)
+          (none)))
+      (assignment
+        (dotted_name
+          (identifier))
+        (comparison_operator
+          (identifier)
+          (none))))

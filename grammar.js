@@ -428,6 +428,7 @@ module.exports = grammar({
       $.paren_expression,
       $.optional_attribute,
       $.optional_item,
+      $.null_coalesce
     ),
 
     paren_expression: $ => seq(
@@ -542,6 +543,12 @@ module.exports = grammar({
       '?[',
       field('index', $.expression),
       ']',
+    )),
+
+    null_coalesce: $ => prec.right(seq(
+      $.expression,
+      'or',
+      $.expression
     )),
 
     subscript: $ => prec(PREC.call, seq(
