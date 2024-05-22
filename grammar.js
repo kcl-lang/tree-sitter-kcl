@@ -428,11 +428,17 @@ module.exports = grammar({
       $.paren_expression,
       $.optional_attribute,
       $.optional_item,
-      $.null_coalesce
+      $.null_coalesce,
+      $.smoke_expr
     ),
 
     paren_expression: $ => seq(
       '(', $.expression, ')'
+    ),
+
+    smoke_expr: $ => seq(
+      $.expression,
+      '\n'
     ),
 
     not_operator: $ => prec(PREC.not, seq(

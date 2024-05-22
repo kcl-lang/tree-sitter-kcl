@@ -1026,6 +1026,10 @@
         {
           "type": "SYMBOL",
           "name": "null_coalesce"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "smoke_expr"
         }
       ]
     },
@@ -1043,6 +1047,19 @@
         {
           "type": "STRING",
           "value": ")"
+        }
+      ]
+    },
+    "smoke_expr": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "expression"
+        },
+        {
+          "type": "STRING",
+          "value": "\n"
         }
       ]
     },

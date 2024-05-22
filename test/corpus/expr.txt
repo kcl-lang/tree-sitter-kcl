@@ -620,3 +620,19 @@ j = y is not None
         (comparison_operator
           (identifier)
           (none))))
+
+================================================================================
+Smoke expression 
+================================================================================
+
+"\"1\"\n"
+--------------------------------------------------------------------------------
+
+(module
+  (string
+    (string_start)
+    (string_content
+      (escape_sequence)
+      (escape_sequence)
+      (escape_sequence))
+    (string_end)))
