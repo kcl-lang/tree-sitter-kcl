@@ -426,6 +426,8 @@ module.exports = grammar({
       $.lambda_expr,
       $.schema_expr,
       $.paren_expression,
+      $.optional_attribute,
+      $.optional_item,
     ),
 
     paren_expression: $ => seq(
@@ -527,6 +529,19 @@ module.exports = grammar({
       field('object', $.primary_expression),
       '.',
       field('attribute', $.identifier),
+    )),
+
+    optional_attribute: $ => prec(PREC.call, seq(
+      field('object', $.primary_expression),
+      '?.',
+      field('attribute', $.identifier),
+    )),
+
+    optional_item: $ => prec(PREC.call, seq(
+      field('object', $.primary_expression),
+      '?[',
+      field('index', $.expression),
+      ']',
     )),
 
     subscript: $ => prec(PREC.call, seq(
