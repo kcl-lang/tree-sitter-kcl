@@ -210,6 +210,10 @@
       {
         "type": "nonstring_literal_expr",
         "named": true
+      },
+      {
+        "type": "string_literal_expr",
+        "named": true
       }  
     ]
   },
@@ -391,6 +395,27 @@
       }
     ]
   },
+  {
+    "type": "string_literal_expr",
+    "named": true,
+    "definition": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "\""
+        },
+        {
+          "type": "PATTERN",
+          "value": "[^\"\n]*"
+        },
+        {
+          "type": "STRING",
+          "value": "\""
+        }
+      ]
+    }
+  },  
   {
     "type": "optional_attribute",
     "named": true,

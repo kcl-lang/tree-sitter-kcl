@@ -1034,6 +1034,10 @@
         {
           "type": "SYMBOL",
           "name": "nonstring_literal_expr" 
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string_literal_expr" 
         }
       ]
     },
@@ -1114,6 +1118,23 @@
         {
           "type": "SYMBOL",
           "name": "undefined"
+        }
+      ]
+    },
+    "string_literal_expr": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "\""
+        },
+        {
+          "type": "PATTERN",
+          "value": "[^\"\n]*"
+        },
+        {
+          "type": "STRING",
+          "value": "\""
         }
       ]
     },

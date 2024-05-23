@@ -430,7 +430,8 @@ module.exports = grammar({
       $.optional_item,
       $.null_coalesce,
       $.smoke_expr,
-      $.nonstring_literal_expr
+      $.nonstring_literal_expr,
+      $.string_literal_expr
     ),
 
     paren_expression: $ => seq(
@@ -469,6 +470,12 @@ module.exports = grammar({
       $.undefined
     ),
 
+    string_literal_expr: $ => seq(
+      '"',
+      /[^"]*/, 
+      '"'
+    ),
+    
     binary_operator: $ => {
       const table = [
         [prec.left, '+', PREC.plus],
