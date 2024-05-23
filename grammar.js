@@ -76,6 +76,29 @@ const KEYWORDS = {
   TYPE: "type",
 }
 
+const RESERVED_KEYWORDS = {
+  PASS: "pass",
+  RETURN: "return",
+  VALIDATE: "validate",
+  RULE: "rule",
+  DEF: "def",
+  FLOW: "flow",
+  DEL: "del",
+  RAISE: "raise",
+  FROM: "from",
+  GLOBAL: "global",
+  NONLOCAL: "nonlocal",
+  EXCEPT: "except",
+  FINALLY: "finally",
+  WITH: "with",
+  TRY: "try",
+  WHILE: "while",
+  YEILD: "yield",
+  STRUCT: "struct",
+  CLASS: "class",
+  FINAL: "final",
+}
+
 const TYPES = {
   ANY: "any",
   STRING: "str",
@@ -239,7 +262,9 @@ module.exports = grammar({
       // TODO: schema and rule statement grammars
       $.schema_statement,
       $.rule_statement,
+      $.check_statement,
       $.mixin_statement,
+      $.protocol_statement,
       $.decorated_definition,
     ),
 
@@ -297,7 +322,7 @@ module.exports = grammar({
       optional(seq('if', field('expr2', $.expression))),
       '}'
     ),
-    
+
     quant_target: $ => choice(
       $.string,
       $.identifier,
@@ -353,12 +378,31 @@ module.exports = grammar({
       field('body', $._suite),
     ),
 
+    protocol_statement: $ => seq(
+      'protocol',
+      field('name', $.identifier),
+      ':',
+      field('body', $._suite),
+    ),
+
     rule_statement: $ => seq(
       'rule',
       field('name', $.identifier),
       ':',
       field('body', $._suite),
     ),
+
+    check_statement: $ => prec.left(seq(
+      'check',
+      ':',
+      repeat1(
+        seq(
+          field('quant_expr', $.quant_expr),
+          ',',
+          field('error_message', $.string)
+        )
+      )
+    )), 
 
     argument_list: $ => seq(
       '(',
@@ -378,6 +422,8 @@ module.exports = grammar({
         $.schema_statement,
         $.mixin_statement,
         $.rule_statement,
+        $.protocol_statement,
+        $.check_statement,
       )),
     ),
 

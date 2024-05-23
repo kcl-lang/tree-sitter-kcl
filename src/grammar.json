@@ -219,7 +219,15 @@
         },
         {
           "type": "SYMBOL",
+          "name": "check_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "mixin_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "protocol_statement"
         },
         {
           "type": "SYMBOL",
@@ -715,6 +723,35 @@
         }
       ]
     },
+    "protocol_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "protocol"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
+          "type": "FIELD",
+          "name": "body",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_suite"
+          }
+        }
+      ]
+    },
     "rule_statement": {
       "type": "SEQ",
       "members": [
@@ -743,6 +780,51 @@
           }
         }
       ]
+    },
+    "check_statement": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "check"
+          },
+          {
+            "type": "STRING",
+            "value": ":"
+          },
+          {
+            "type": "REPEAT1",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "FIELD",
+                  "name": "quant_expr",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "quant_expr"
+                  }
+                },
+                {
+                  "type": "STRING",
+                  "value": ","
+                },
+                {
+                  "type": "FIELD",
+                  "name": "error_message",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "string"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
     },
     "argument_list": {
       "type": "SEQ",
@@ -847,6 +929,14 @@
               {
                 "type": "SYMBOL",
                 "name": "rule_statement"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "protocol_statement"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "check_statement"
               }
             ]
           }

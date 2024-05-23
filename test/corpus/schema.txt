@@ -50,6 +50,25 @@ mixin FullNameMixin for PersonProtocol:
             (identifier)))))))
 
 ================================================================================
+Protocol Statement
+================================================================================
+
+protocol DataProtocol:
+    data: str
+
+--------------------------------------------------------------------------------
+
+(module
+    (protocol_statement
+    (identifier)
+    (ERROR
+        (dotted_name
+        (identifier))
+        (type
+        (basic_type)))
+    (block)))
+
+================================================================================
 Rule Statement
 ================================================================================
 
@@ -70,3 +89,118 @@ rule SomeRule:
         (string_start)
         (string_content)
         (string_end)))))
+
+================================================================================
+Schema Statement with Check
+================================================================================
+
+schema Config:
+    volumes: [{str:}]
+    services: [{str:}]
+
+    check:
+        all service in services {
+            service.clusterIP == "NONE" if service.type == "ClusterIP"
+        }, "invalid cluster ip"
+
+        any volume in volumes {
+            volume.mountPath in ["/home/admin", "/home/myapp"]
+        }
+
+--------------------------------------------------------------------------------
+
+(module
+    (ERROR
+    (schema_statement
+        (identifier)
+        (ERROR
+        (dotted_name
+            (identifier))
+        (ERROR
+            (type
+            (list_type
+                (type
+                (dict_type
+                    (type
+                    (basic_type))
+                    (type
+                    (schema_type
+                        (dotted_name
+                        (MISSING identifier))))))))
+            (identifier)
+            (type
+            (list_type
+                (type
+                (dict_type
+                    (type
+                    (basic_type))
+                    (type
+                    (schema_type
+                        (dotted_name
+                        (MISSING identifier))))))))
+            (identifier)
+            (identifier)
+            (identifier)
+            (type
+            (schema_type
+                (dotted_name
+                (identifier)))))
+        (ERROR
+            (type
+            (schema_type
+                (dotted_name
+                (identifier)
+                (identifier))))
+            (type
+            (literal_type
+                (string
+                (string_start)
+                (string_content)
+                (string_end))))
+            (type
+            (schema_type
+                (dotted_name
+                (identifier)
+                (identifier))))
+            (type
+            (literal_type
+                (string
+                (string_start)
+                (string_content)
+                (string_end))))
+            (type
+            (literal_type
+                (string
+                (string_start)
+                (string_content)
+                (string_end))))
+            (identifier)
+            (identifier)
+            (identifier)
+            (type
+            (schema_type
+                (dotted_name
+                (identifier)))))
+        (ERROR
+            (type
+            (schema_type
+                (dotted_name
+                (identifier)
+                (identifier))))
+            (identifier))
+        (type
+            (list_type
+            (ERROR
+                (type
+                (literal_type
+                    (string
+                    (string_start)
+                    (string_content)
+                    (string_end)))))
+            (type
+                (literal_type
+                (string
+                    (string_start)
+                    (string_content)
+                    (string_end)))))))
+        (block))))

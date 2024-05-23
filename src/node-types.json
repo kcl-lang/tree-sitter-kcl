@@ -4,6 +4,10 @@
     "named": true,
     "subtypes": [
       {
+        "type": "check_statement",
+        "named": true
+      },
+      {
         "type": "decorated_definition",
         "named": true
       },
@@ -13,6 +17,10 @@
       },
       {
         "type": "mixin_statement",
+        "named": true
+      },
+      {
+        "type": "protocol_statement",
         "named": true
       },
       {
@@ -608,6 +616,32 @@
     }
   },
   {
+    "type": "check_statement",
+    "named": true,
+    "fields": {
+      "error_message": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      },
+      "quant_expr": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "quant_expr",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "comparison_operator",
     "named": true,
     "fields": {
@@ -693,7 +727,15 @@
         "required": true,
         "types": [
           {
+            "type": "check_statement",
+            "named": true
+          },
+          {
             "type": "mixin_statement",
+            "named": true
+          },
+          {
+            "type": "protocol_statement",
             "named": true
           },
           {
@@ -1375,6 +1417,32 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "protocol_statement",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -2079,6 +2147,10 @@
     "named": false
   },
   {
+    "type": "check",
+    "named": false
+  },
+  {
     "type": "comment",
     "named": true
   },
@@ -2192,6 +2264,10 @@
   },
   {
     "type": "or",
+    "named": false
+  },
+  {
+    "type": "protocol",
     "named": false
   },
   {
