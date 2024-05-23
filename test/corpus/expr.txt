@@ -152,94 +152,18 @@ b = data?.name
               (string_start)
               (string_content)
               (string_end)))))
-      (ERROR
-        (dotted_name
-          (identifier))
-        (dotted_name
-          (identifier)
-          (ERROR
-            (UNEXPECTED '?'))
-          (identifier)
-          (ERROR
-            (identifier)
-            (identifier)
-            (UNEXPECTED '?'))
-          (identifier))))
-
-================================================================================
-quantifier map expression
-================================================================================
-
-b = map k, v in {a = "foo", b = "bar"} { v } 
-
---------------------------------------------------------------------------------
-
-(module
       (assignment
         (dotted_name
           (identifier))
-        (comparison_operator
+        (optional_attribute
           (identifier)
-          (ERROR
-            (identifier)
-            (identifier))
-          (dictionary
-            (pair
-              (identifier)
-              (string
-                (string_start)
-                (string_content)
-                (string_end)))
-            (pair
-              (identifier)
-              (string
-                (string_start)
-                (string_content)
-                (string_end))))))
-      (MISSING _newline)
-      (dictionary
-        (ERROR
-          (identifier))))
-
-================================================================================
-quantifier filter expression
-================================================================================
-
-d = filter _, v in {a = "foo", b = "bar"} {v == "foo"}
-
---------------------------------------------------------------------------------
-
-(module
+          (identifier)))
       (assignment
         (dotted_name
           (identifier))
-        (comparison_operator
+        (optional_attribute
           (identifier)
-          (ERROR
-            (identifier)
-            (identifier))
-          (dictionary
-            (pair
-              (identifier)
-              (string
-                (string_start)
-                (string_content)
-                (string_end)))
-            (pair
-              (identifier)
-              (string
-                (string_start)
-                (string_content)
-                (string_end))))))
-      (MISSING _newline)
-      (dictionary
-        (ERROR
-          (comparison_operator
-            (identifier)
-            (string
-              (string_start)
-              (string_content)
-              (string_end))))))
+          (identifier))))
 
 ================================================================================
 attribute expression
@@ -316,13 +240,11 @@ name2 = person?.name
                 (string_start)
                 (string_content)
                 (string_end))))))
-      (ERROR
+      (assignment
         (dotted_name
           (identifier))
-        (dotted_name
+        (optional_attribute
           (identifier)
-          (ERROR
-            (UNEXPECTED '?'))
             (identifier))))
 
 ================================================================================
@@ -347,9 +269,132 @@ item = datalist?[0]?
         (assignment
           (dotted_name
             (identifier))
-          (subscript
+          (optional_item
             (identifier)
-            (ERROR
-              (UNEXPECTED '?'))
             (integer)))
-        (UNEXPECTED '?')))
+        (UNEXPECTED '\n')))
+
+================================================================================
+quantifier all expression
+================================================================================
+
+all x in [1, 2, 3, 4] { x > 0 }
+
+--------------------------------------------------------------------------------
+
+(module
+  (ERROR
+    (quant_op))
+  (comparison_operator
+    (identifier)
+    (list
+      (integer)
+      (integer)
+      (integer)
+      (integer)))
+  (MISSING _newline)
+  (dictionary
+    (ERROR
+      (comparison_operator
+        (identifier)
+        (integer)))))
+
+================================================================================
+quantifier any expression
+================================================================================
+
+any x in [1, 2, 3, 4] { x == 2 }
+
+--------------------------------------------------------------------------------
+
+(module
+  (ERROR
+    (quant_op))
+  (comparison_operator
+    (identifier)
+    (list
+      (integer)
+      (integer)
+      (integer)
+      (integer)))
+  (MISSING _newline)
+  (dictionary
+    (ERROR
+      (comparison_operator
+        (identifier)
+        (integer)))))
+
+================================================================================
+quantifier map expression
+================================================================================
+
+b = map k, v in {a = "foo", b = "bar"} { v } 
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (ERROR
+      (quant_op)
+      (identifier))
+    (comparison_operator
+      (identifier)
+      (dictionary
+        (pair
+          (identifier)
+          (string
+            (string_start)
+            (string_content)
+            (string_end)))
+        (pair
+          (identifier)
+          (string
+            (string_start)
+            (string_content)
+            (string_end))))))
+  (MISSING _newline)
+  (dictionary
+    (ERROR
+      (identifier))))
+
+================================================================================
+quantifier filter expression
+================================================================================
+
+d = filter _, v in {a = "foo", b = "bar"} {v == "foo"}
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (ERROR
+      (quant_op)
+      (identifier))
+      (comparison_operator
+      (identifier)
+      (dictionary
+        (pair
+          (identifier)
+          (string
+            (string_start)
+            (string_content)
+            (string_end)))
+        (pair
+          (identifier)
+          (string
+            (string_start)
+            (string_content)
+              (string_end))))))
+        (MISSING _newline)
+        (dictionary
+        (ERROR
+          (comparison_operator
+            (identifier)
+            (string
+              (string_start)
+              (string_content)
+              (string_end))))))

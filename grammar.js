@@ -239,6 +239,7 @@ module.exports = grammar({
       // TODO: schema and rule statement grammars
       $.schema_statement,
       $.rule_statement,
+      $.mixin_statement,
       $.decorated_definition,
     ),
 
@@ -284,6 +285,35 @@ module.exports = grammar({
       '}',
     )),
 
+    quant_expr: $ => seq(
+      field('quant_op', $.quant_op),
+      '[',
+      optional(seq(field('identifier1', $.identifier), ',')),
+      field('identifier2', $.identifier),
+      'in',
+      field('quant_target', $.quant_target),
+      '{',
+      field('expr1', $.expression),
+      optional(seq('if', field('expr2', $.expression))),
+      '}'
+    ),
+    
+    quant_target: $ => choice(
+      $.string,
+      $.identifier,
+      $.list,
+      $.list_comprehension,
+      $.dictionary,
+      $.dictionary_comprehension
+    ),
+    
+    quant_op: $ => choice(
+      'all',
+      'any',
+      'filter',
+      'map'
+    ),
+
     parameters: $ => seq(
       '(',
       optional($._parameters),
@@ -314,6 +344,15 @@ module.exports = grammar({
       field('body', $._suite),
     ),
 
+    mixin_statement: $ => seq(
+      'mixin',
+      field('name', $.identifier),
+      'for',
+      field('protocol', $.identifier),
+      ':',
+      field('body', $._suite),
+    ),
+
     rule_statement: $ => seq(
       'rule',
       field('name', $.identifier),
@@ -337,6 +376,7 @@ module.exports = grammar({
       repeat1($.decorator),
       field('definition', choice(
         $.schema_statement,
+        $.mixin_statement,
         $.rule_statement,
       )),
     ),
@@ -424,6 +464,7 @@ module.exports = grammar({
       $.dictionary,
       $.dictionary_comprehension,
       $.lambda_expr,
+      $.quant_expr,
       $.schema_expr,
       $.paren_expression,
       $.optional_attribute,

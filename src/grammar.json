@@ -219,6 +219,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "mixin_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "decorated_definition"
         }
       ]
@@ -412,6 +416,159 @@
         ]
       }
     },
+    "quant_expr": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "quant_op",
+          "content": {
+            "type": "SYMBOL",
+            "name": "quant_op"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "["
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "FIELD",
+                  "name": "identifier1",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "identifier"
+                  }
+                },
+                {
+                  "type": "STRING",
+                  "value": ","
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "identifier2",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "in"
+        },
+        {
+          "type": "FIELD",
+          "name": "quant_target",
+          "content": {
+            "type": "SYMBOL",
+            "name": "quant_target"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "FIELD",
+          "name": "expr1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "expression"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "if"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "expr2",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "expression"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "quant_target": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "list"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "list_comprehension"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "dictionary"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "dictionary_comprehension"
+        }
+      ]
+    },
+    "quant_op": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "all"
+        },
+        {
+          "type": "STRING",
+          "value": "any"
+        },
+        {
+          "type": "STRING",
+          "value": "filter"
+        },
+        {
+          "type": "STRING",
+          "value": "map"
+        }
+      ]
+    },
     "parameters": {
       "type": "SEQ",
       "members": [
@@ -498,6 +655,47 @@
         {
           "type": "FIELD",
           "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
+          "type": "FIELD",
+          "name": "body",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_suite"
+          }
+        }
+      ]
+    },
+    "mixin_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "mixin"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "for"
+        },
+        {
+          "type": "FIELD",
+          "name": "protocol",
           "content": {
             "type": "SYMBOL",
             "name": "identifier"
@@ -641,6 +839,10 @@
               {
                 "type": "SYMBOL",
                 "name": "schema_statement"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "mixin_statement"
               },
               {
                 "type": "SYMBOL",
@@ -1006,6 +1208,10 @@
         {
           "type": "SYMBOL",
           "name": "lambda_expr"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "quant_expr"
         },
         {
           "type": "SYMBOL",
@@ -3396,24 +3602,5 @@
     "expression",
     "primary_expression",
     "parameter"
-  ],
-  "PREC": {
-    "typed_parameter": -1,
-    "conditional": -1,
-    "or": 10,
-    "and": 11,
-    "not": 12,
-    "compare": 13,
-    "bitwise_or": 14,
-    "bitwise_and": 15,
-    "xor": 16,
-    "shift": 17,
-    "plus": 18,
-    "times": 19,
-    "unary": 20,
-    "power": 21,
-    "call": 22,
-    "as": 23
-  }
+  ]
 }
-

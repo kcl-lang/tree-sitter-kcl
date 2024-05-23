@@ -20,3 +20,53 @@ schema Person:
             (string_start)
             (string_content)
             (string_end))))))
+
+================================================================================
+Mixin Statement
+================================================================================
+
+mixin FullNameMixin for PersonProtocol:
+    fullName = "{} {}".format(firstName, lastName)
+
+--------------------------------------------------------------------------------
+
+(module
+    (mixin_statement
+    (identifier)
+    (identifier)
+    (block
+        (assignment
+        (dotted_name
+            (identifier))
+        (call
+            (attribute
+            (string
+                (string_start)
+                (string_content)
+                (string_end))
+            (identifier))
+            (argument_list
+            (identifier)
+            (identifier)))))))
+
+================================================================================
+Rule Statement
+================================================================================
+
+rule SomeRule:
+    age > 0, "rule check failure message"
+
+--------------------------------------------------------------------------------
+
+(module
+    (rule_statement
+    (identifier)
+    (ERROR
+        (comparison_operator
+        (identifier)
+        (integer)))
+    (block
+        (string
+        (string_start)
+        (string_content)
+        (string_end)))))
