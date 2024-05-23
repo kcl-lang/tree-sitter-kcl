@@ -426,6 +426,8 @@ module.exports = grammar({
       $.lambda_expr,
       $.schema_expr,
       $.paren_expression,
+      $.bracket_expression,
+      $.braces_expression,
       $.optional_attribute,
       $.optional_item,
       $.null_coalesce,
@@ -433,11 +435,19 @@ module.exports = grammar({
       $.nonstring_literal_expr,
       $.string_literal_expr,
       $.number_bin_suffix_expr,
-      $.config_expr
+      $.config_expr,
     ),
 
     paren_expression: $ => seq(
       '(', $.expression, ')'
+    ),
+
+    bracket_expression: $ => seq(
+      '[', $.expression, ']'
+    ),
+
+    braces_expression: $ => seq(
+      '{', $.expression, '}'
     ),
 
     smoke_expr: $ => seq(

@@ -1017,6 +1017,14 @@
         },
         {
           "type": "SYMBOL",
+          "name": "bracket_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "braces_expression"
+        },
+        {
+          "type": "SYMBOL",
           "name": "optional_attribute"
         },
         {
@@ -1063,6 +1071,40 @@
         {
           "type": "STRING",
           "value": ")"
+        }
+      ]
+    },
+    "bracket_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "["
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expression"
+        },
+        {
+          "type": "STRING",
+          "value": "]"
+        }
+      ]
+    },
+    "braces_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expression"
+        },
+        {
+          "type": "STRING",
+          "value": "}"
         }
       ]
     },

@@ -168,6 +168,14 @@
         "named": true
       },
       {
+        "type": "bracket_expression",
+        "named": true
+      },
+      {
+        "type": "braces_expression",
+        "named": true
+      },
+      {
         "type": "schema_expr",
         "named": true
       },
@@ -1497,6 +1505,36 @@
         }
       ]
     }
+  },
+  {
+    "type": "bracket_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "braces_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    } 
   },
   {
     "type": "rule_statement",
