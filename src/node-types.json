@@ -218,6 +218,10 @@
       {
         "type": "number_bin_suffix_expr",
         "named": true
+      },
+      {
+        "type": "config_expr",
+        "named": true
       }  
     ]
   },
@@ -518,6 +522,48 @@
         "types": [
           {
             "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "config_expr",
+    "named": true,
+    "fields": {
+      "entries": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "config_entry",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "config_entry",
+    "named": true,
+    "fields": {
+      "key": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "primary_expression",
             "named": true
           }
         ]

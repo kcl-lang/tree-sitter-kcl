@@ -675,3 +675,41 @@ Number bin suffix expressions
   (module
       (integer))
 
+================================================================================
+Config expressions
+================================================================================
+
+{
+  "name" = {
+    "name": "alice"
+  },
+  "gender" = "female"
+}
+--------------------------------------------------------------------------------
+
+(module
+  (dictionary
+    (pair
+      (string
+        (string_start)
+        (string_content)
+        (string_end))
+      (dictionary
+        (pair
+          (string
+            (string_start)
+            (string_content)
+            (string_end))
+          (string
+            (string_start)
+            (string_content)
+            (string_end)))))
+    (pair
+      (string
+        (string_start)
+        (string_content)
+        (string_end))
+      (string
+        (string_start)
+        (string_content)
+        (string_end)))))

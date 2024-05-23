@@ -432,7 +432,8 @@ module.exports = grammar({
       $.smoke_expr,
       $.nonstring_literal_expr,
       $.string_literal_expr,
-      $.number_bin_suffix_expr
+      $.number_bin_suffix_expr,
+      $.config_expr
     ),
 
     paren_expression: $ => seq(
@@ -478,6 +479,16 @@ module.exports = grammar({
     ),
 
     number_bin_suffix_expr: $ => /\d+[kKmMgGtT]?[iI]?/,
+
+    config_expr: $ => seq(
+      '{',
+      sepBy(',', seq(
+        field('key', $.identifier),
+        '=',
+        field('value', $.expression)
+      )),
+      '}'
+    ),
     
     binary_operator: $ => {
       const table = [

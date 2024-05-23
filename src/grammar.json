@@ -1042,6 +1042,10 @@
         {
           "type": "SYMBOL",
           "name": "number_bin_suffix_expr" 
+        },
+        {
+          "type": "SYMBOL",
+          "name": "config_expr"
         }
       ]
     },
@@ -1145,6 +1149,54 @@
     "number_bin_suffix_expr": {
       "type": "REGEXP",
       "value": "\\d+[kKmMgGtT]?[iI]?"
+    },
+    "config_expr": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "key",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                }
+              },
+              {
+                "type": "STRING",
+                "value": "="
+              },
+              {
+                "type": "FIELD",
+                "name": "value",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "expression"
+                }
+              },
+              {
+                "type": "OPTIONAL",
+                "content": {
+                  "type": "STRING",
+                  "value": ","
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
     },
     "boolean_operator": {
       "type": "CHOICE",
