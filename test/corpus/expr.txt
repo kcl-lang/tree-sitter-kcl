@@ -330,29 +330,27 @@ optional item expression
 ================================================================================
 
 datalist = [[1], 2, 3]
-item = datalist?[0]?
+item = datalist?[0]
 
 --------------------------------------------------------------------------------
 
 (module
-      (assignment
-        (dotted_name
-          (identifier))
-        (list
-          (list
-            (integer))
-          (integer)
-          (integer)))
+  (assignment
+    (dotted_name
+      (identifier))
+    (list
+      (list
+        (integer))
+      (integer)
+      (integer)))
+  (assignment
+    (dotted_name
+      (identifier))
+    (subscript
+      (identifier)
       (ERROR
-        (assignment
-          (dotted_name
-            (identifier))
-          (subscript
-            (identifier)
-            (ERROR
-              (UNEXPECTED '?'))
-            (integer)))
-        (UNEXPECTED '?')))
+        (UNEXPECTED '?'))
+      (integer))))
 
 ================================================================================
 null coalesce expression
@@ -621,3 +619,35 @@ Smoke expression
       (escape_sequence)
       (escape_sequence))
     (string_end)))
+
+================================================================================
+Non-literal expressions
+================================================================================
+
+p = (a + b) * c  
+q = x and y       
+r = not x         
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (binary_operator
+      (paren_expression
+        (binary_operator
+          (identifier)
+          (identifier)))
+      (identifier)))
+  (assignment
+    (dotted_name
+      (identifier))
+    (boolean_operator
+      (identifier)
+      (identifier)))
+  (assignment
+    (dotted_name
+      (identifier))
+    (not_operator
+      (identifier))))

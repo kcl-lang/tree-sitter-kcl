@@ -1030,6 +1030,10 @@
         {
           "type": "SYMBOL",
           "name": "smoke_expr"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "nonstring_literal_expr" 
         }
       ]
     },
@@ -1083,6 +1087,35 @@
           }
         ]
       }
+    },
+    "nonstring_literal_expr": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "integer"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "float"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "true"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "false"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "none"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "undefined"
+        }
+      ]
     },
     "boolean_operator": {
       "type": "CHOICE",

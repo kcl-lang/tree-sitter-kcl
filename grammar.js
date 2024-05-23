@@ -429,7 +429,8 @@ module.exports = grammar({
       $.optional_attribute,
       $.optional_item,
       $.null_coalesce,
-      $.smoke_expr
+      $.smoke_expr,
+      $.nonstring_literal_expr
     ),
 
     paren_expression: $ => seq(
@@ -457,6 +458,15 @@ module.exports = grammar({
         field('operator', 'or'),
         field('right', $.expression),
       )),
+    ),
+
+    nonstring_literal_expr: $ => choice(
+      $.integer,
+      $.float,
+      $.true,
+      $.false,
+      $.none,
+      $.undefined
     ),
 
     binary_operator: $ => {
