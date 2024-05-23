@@ -1038,6 +1038,10 @@
         {
           "type": "SYMBOL",
           "name": "string_literal_expr" 
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number_bin_suffix_expr" 
         }
       ]
     },
@@ -1137,6 +1141,10 @@
           "value": "\""
         }
       ]
+    },
+    "number_bin_suffix_expr": {
+      "type": "REGEXP",
+      "value": "\\d+[kKmMgGtT]?[iI]?"
     },
     "boolean_operator": {
       "type": "CHOICE",

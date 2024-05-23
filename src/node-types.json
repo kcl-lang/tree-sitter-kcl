@@ -214,6 +214,10 @@
       {
         "type": "string_literal_expr",
         "named": true
+      },
+      {
+        "type": "number_bin_suffix_expr",
+        "named": true
       }  
     ]
   },
@@ -415,7 +419,17 @@
         }
       ]
     }
-  },  
+  },
+  {
+    "type": "number_bin_suffix_expr",
+    "named": true,
+    "fields": {
+      "value": {
+        "type": "string",
+        "named": true
+      }
+    }
+  }, 
   {
     "type": "optional_attribute",
     "named": true,

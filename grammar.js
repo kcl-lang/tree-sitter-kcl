@@ -431,7 +431,8 @@ module.exports = grammar({
       $.null_coalesce,
       $.smoke_expr,
       $.nonstring_literal_expr,
-      $.string_literal_expr
+      $.string_literal_expr,
+      $.number_bin_suffix_expr
     ),
 
     paren_expression: $ => seq(
@@ -475,6 +476,8 @@ module.exports = grammar({
       /[^"]*/, 
       '"'
     ),
+
+    number_bin_suffix_expr: $ => /\d+[kKmMgGtT]?[iI]?/,
     
     binary_operator: $ => {
       const table = [
