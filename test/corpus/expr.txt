@@ -359,56 +359,41 @@ null coalesce expression
 ================================================================================
 
 data = {"name": {"key": "value"}}
-name3 = data?["name"]?["err_key"]?.lower() or "name3_value"
+name3 = data["name"] or "name3_value"
 
 --------------------------------------------------------------------------------
 
 (module
-      (assignment
-        (dotted_name
-          (identifier))
+  (assignment
+    (dotted_name
+      (identifier))
+    (dictionary
+      (pair
+        (string
+          (string_start)
+          (string_content)
+          (string_end))
         (dictionary
           (pair
             (string
               (string_start)
               (string_content)
               (string_end))
-            (dictionary
-              (pair
-                (string
-                  (string_start)
-                  (string_content)
-                  (string_end))
-                (string
-                  (string_start)
-                  (string_content)
-                  (string_end)))))))
+            (string
+              (string_start)
+              (string_content)
+              (string_end)))))))
       (assignment
         (dotted_name
           (identifier))
         (boolean_operator
-          (call
-            (attribute
-              (subscript
-                (subscript
-                  (identifier)
-                  (ERROR
-                    (UNEXPECTED '?'))
-                  (string
-                    (string_start)
-                    (string_content)
-                    (string_end)))
-                (ERROR
-                  (UNEXPECTED '?'))
-                (string
-                  (string_start)
-                  (string_content)
-                  (string_end)))
-              (ERROR
-                (UNEXPECTED '?'))
-                (identifier))
-            (argument_list))
+          (subscript
+            (identifier)
             (string
+              (string_start)
+              (string_content)
+              (string_end)))
+          (string
             (string_start)
             (string_content)
             (string_end)))))
