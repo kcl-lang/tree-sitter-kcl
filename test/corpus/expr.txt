@@ -177,11 +177,11 @@ d = filter _, v in {a = "foo", b = "bar"} {v == "foo"}
       (assignment
         (dotted_name
           (identifier))
+        (ERROR
+          (quant_op)
+            (identifier))
         (comparison_operator
           (identifier)
-          (ERROR
-            (identifier)
-            (identifier))
           (dictionary
             (pair
               (identifier)
