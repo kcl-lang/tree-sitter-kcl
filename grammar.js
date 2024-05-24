@@ -426,12 +426,33 @@ module.exports = grammar({
       $.lambda_expr,
       $.schema_expr,
       $.paren_expression,
+      $.bracket_expression,
+      $.braces_expression,
       $.optional_attribute,
       $.optional_item,
+      $.null_coalesce,
+      $.smoke_expr,
+      $.nonstring_literal_expr,
+      $.string_literal_expr,
+      $.number_bin_suffix_expr,
+      $.config_expr,
     ),
 
     paren_expression: $ => seq(
       '(', $.expression, ')'
+    ),
+
+    bracket_expression: $ => seq(
+      '[', $.expression, ']'
+    ),
+
+    braces_expression: $ => seq(
+      '{', $.expression, '}'
+    ),
+
+    smoke_expr: $ => seq(
+      $.expression,
+      '\n'
     ),
 
     not_operator: $ => prec(PREC.not, seq(
@@ -452,6 +473,33 @@ module.exports = grammar({
       )),
     ),
 
+    nonstring_literal_expr: $ => choice(
+      $.integer,
+      $.float,
+      $.true,
+      $.false,
+      $.none,
+      $.undefined
+    ),
+
+    string_literal_expr: $ => seq(
+      '"',
+      /[^"]*/, 
+      '"'
+    ),
+
+    number_bin_suffix_expr: $ => /\d+[kKmMgGtT]?[iI]?/,
+
+    config_expr: $ => seq(
+      '{',
+      sepBy(',', seq(
+        field('key', $.identifier),
+        '=',
+        field('value', $.expression)
+      )),
+      '}'
+    ),
+    
     binary_operator: $ => {
       const table = [
         [prec.left, '+', PREC.plus],
@@ -542,6 +590,12 @@ module.exports = grammar({
       '?[',
       field('index', $.expression),
       ']',
+    )),
+
+    null_coalesce: $ => prec.right(seq(
+      $.expression,
+      'or',
+      $.expression
     )),
 
     subscript: $ => prec(PREC.call, seq(
