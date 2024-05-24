@@ -124,7 +124,7 @@ result = myDict.key
               (string_start)
               (string_content)
               (string_end)))))
-      (ERROR
+      (assignment
         (dotted_name
           (identifier))
         (dotted_name
@@ -155,13 +155,13 @@ b = data?.name
       (assignment
         (dotted_name
           (identifier))
-        (optional_attribute
+        (dotted_name
           (identifier)
           (identifier)))
       (assignment
         (dotted_name
           (identifier))
-        (optional_attribute
+        (dotted_name
           (identifier)
           (identifier))))
 
@@ -194,10 +194,8 @@ d = filter _, v in {a = "foo", b = "bar"} {v == "foo"}
               (string
                 (string_start)
                 (string_content)
-                (string_end))))))
-      (MISSING _newline)
-      (dictionary
-        (ERROR
+                (string_end)))))
+      (braces_expression
           (comparison_operator
             (identifier)
             (string
@@ -239,7 +237,7 @@ name1 = person.name
                 (string_start)
                 (string_content)
                 (string_end))))))
-      (ERROR
+      (assignment
         (dotted_name
           (identifier))
         (dotted_name
@@ -283,7 +281,7 @@ name2 = person?.name
       (assignment
         (dotted_name
           (identifier))
-        (optional_attribute
+        (dotted_name
           (identifier)
             (identifier))))
 
@@ -711,21 +709,17 @@ all x in [1, 2, 3, 4] { x > 0 }
 --------------------------------------------------------------------------------
 
 (module
-  (ERROR
-    (quant_op))
-  (comparison_operator
+  (quant_expr
+    (quant_op)
     (identifier)
-    (list
+    (quant_target
       (integer)
       (integer)
       (integer)
-      (integer)))
-  (MISSING _newline)
-  (dictionary
-    (ERROR
+      (integer))
       (comparison_operator
         (identifier)
-        (integer)))))
+        (integer))))
 
 ================================================================================
 quantifier any expression
@@ -736,21 +730,17 @@ any x in [1, 2, 3, 4] { x == 2 }
 --------------------------------------------------------------------------------
 
 (module
-  (ERROR
-    (quant_op))
-  (comparison_operator
+  (quant_expr
+    (quant_op)
     (identifier)
-    (list
+    (quant_target
       (integer)
       (integer)
       (integer)
-      (integer)))
-  (MISSING _newline)
-  (dictionary
-    (ERROR
-      (comparison_operator
-        (identifier)
-        (integer)))))
+      (integer))
+    (comparison_operator
+      (identifier)
+      (integer))))
 
 ================================================================================
 quantifier map expression
@@ -781,10 +771,8 @@ b = map k, v in {a = "foo", b = "bar"} { v }
           (string
             (string_start)
             (string_content)
-            (string_end))))))
-  (MISSING _newline)
-  (dictionary
-    (ERROR
+            (string_end)))))
+  (braces_expression
       (identifier))))
 
 ================================================================================
@@ -816,10 +804,8 @@ d = filter _, v in {a = "foo", b = "bar"} {v == "foo"}
           (string
             (string_start)
             (string_content)
-              (string_end))))))
-        (MISSING _newline)
-        (dictionary
-        (ERROR
+              (string_end)))))
+        (braces_expression
           (comparison_operator
             (identifier)
             (string
