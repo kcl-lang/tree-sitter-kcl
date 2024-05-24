@@ -313,22 +313,26 @@ module.exports = grammar({
     quant_expr: $ => seq(
       field('quant_op', $.quant_op),
       field('identifier', $.identifier),
+      ',',
+      field('identifier', $.identifier),
       'in',
-      '[',
       field('quant_target', $.quant_target),
-      ']',
       '{',
       field('expr1', $.expression),
-      optional(seq('if', field('expr2', $.expression))),
       '}'
     ),
 
-    quant_target: $ => seq(
-      field('integer', $.integer),
-      repeat(seq(
-        ',',
-        field('integer', $.integer)
-      ))
+    quant_target: $ => choice(
+      $.dictionary,
+      seq(
+        '[',
+        field('integer', $.integer),
+        repeat(seq(
+          ',',
+          field('integer', $.integer)
+        )),
+        ']'
+      )
     ),
     
     quant_op: $ => choice(

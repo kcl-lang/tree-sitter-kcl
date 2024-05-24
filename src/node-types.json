@@ -1535,18 +1535,8 @@
           }
         ]
       },
-      "expr2": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "expression",
-            "named": true
-          }
-        ]
-      },
       "identifier": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
           {
@@ -1588,7 +1578,7 @@
     "fields": {
       "integer": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "integer",
@@ -1596,6 +1586,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "dictionary",
+          "named": true
+        }
+      ]
     }
   },
   {

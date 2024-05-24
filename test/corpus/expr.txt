@@ -177,25 +177,24 @@ d = filter _, v in {a = "foo", b = "bar"} {v == "foo"}
       (assignment
         (dotted_name
           (identifier))
-        (ERROR
+        (quant_expr
           (quant_op)
-            (identifier))
-        (comparison_operator
           (identifier)
-          (dictionary
-            (pair
-              (identifier)
-              (string
-                (string_start)
-                (string_content)
-                (string_end)))
-            (pair
-              (identifier)
-              (string
-                (string_start)
-                (string_content)
-                (string_end)))))
-      (braces_expression
+          (identifier)
+          (quant_target
+            (dictionary
+              (pair
+                (identifier)
+                (string
+                  (string_start)
+                  (string_content)
+                  (string_end)))
+              (pair
+                (identifier)
+                (string
+                  (string_start)
+                  (string_content)
+                  (string_end)))))
           (comparison_operator
             (identifier)
             (string
@@ -701,48 +700,6 @@ Braces expressions
       (integer))))
 
 ================================================================================
-quantifier all expression
-================================================================================
-
-all x in [1, 2, 3, 4] { x > 0 }
-
---------------------------------------------------------------------------------
-
-(module
-  (quant_expr
-    (quant_op)
-    (identifier)
-    (quant_target
-      (integer)
-      (integer)
-      (integer)
-      (integer))
-      (comparison_operator
-        (identifier)
-        (integer))))
-
-================================================================================
-quantifier any expression
-================================================================================
-
-any x in [1, 2, 3, 4] { x == 2 }
-
---------------------------------------------------------------------------------
-
-(module
-  (quant_expr
-    (quant_op)
-    (identifier)
-    (quant_target
-      (integer)
-      (integer)
-      (integer)
-      (integer))
-    (comparison_operator
-      (identifier)
-      (integer))))
-
-================================================================================
 quantifier map expression
 ================================================================================
 
@@ -754,25 +711,24 @@ b = map k, v in {a = "foo", b = "bar"} { v }
   (assignment
     (dotted_name
       (identifier))
-    (ERROR
+    (quant_expr
       (quant_op)
-      (identifier))
-    (comparison_operator
       (identifier)
-      (dictionary
-        (pair
-          (identifier)
-          (string
-            (string_start)
-            (string_content)
-            (string_end)))
-        (pair
-          (identifier)
-          (string
-            (string_start)
-            (string_content)
-            (string_end)))))
-  (braces_expression
+      (identifier)
+      (quant_target
+        (dictionary
+          (pair
+            (identifier)
+            (string
+              (string_start)
+              (string_content)
+              (string_end)))
+          (pair
+            (identifier)
+            (string
+              (string_start)
+              (string_content)
+              (string_end)))))
       (identifier))))
 
 ================================================================================
@@ -787,25 +743,24 @@ d = filter _, v in {a = "foo", b = "bar"} {v == "foo"}
   (assignment
     (dotted_name
       (identifier))
-    (ERROR
+    (quant_expr
       (quant_op)
-      (identifier))
-      (comparison_operator
       (identifier)
-      (dictionary
-        (pair
-          (identifier)
-          (string
-            (string_start)
-            (string_content)
-            (string_end)))
-        (pair
-          (identifier)
-          (string
-            (string_start)
-            (string_content)
+      (identifier)
+      (quant_target
+        (dictionary
+          (pair
+            (identifier)
+            (string
+              (string_start)
+              (string_content)
+              (string_end)))
+          (pair
+            (identifier)
+            (string
+              (string_start)
+              (string_content)
               (string_end)))))
-        (braces_expression
           (comparison_operator
             (identifier)
             (string
