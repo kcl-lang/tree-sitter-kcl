@@ -124,7 +124,7 @@ result = myDict.key
               (string_start)
               (string_content)
               (string_end)))))
-      (ERROR
+      (assignment
         (dotted_name
           (identifier))
         (dotted_name
@@ -152,18 +152,17 @@ b = data?.name
               (string_start)
               (string_content)
               (string_end)))))
-      (ERROR
+      (assignment
         (dotted_name
           (identifier))
         (dotted_name
           (identifier)
-          (ERROR
-            (UNEXPECTED '?'))
+          (identifier)))
+      (assignment
+        (dotted_name
+          (identifier))
+        (dotted_name
           (identifier)
-          (ERROR
-            (identifier)
-            (identifier)
-            (UNEXPECTED '?'))
           (identifier))))
 
 ================================================================================
@@ -253,8 +252,8 @@ name1 = person.name
 
 --------------------------------------------------------------------------------
 
-(module
-  (schema_statement
+ (module
+      (schema_statement
         (identifier)
         (ERROR
           (dotted_name
@@ -275,12 +274,12 @@ name1 = person.name
                 (string_start)
                 (string_content)
                 (string_end))))))
-      (ERROR
+      (assignment
         (dotted_name
           (identifier))
         (dotted_name
-        (identifier)
-        (identifier))))
+          (identifier)
+          (identifier))))
 
 ================================================================================
 optional attribute expression
@@ -316,14 +315,12 @@ name2 = person?.name
                 (string_start)
                 (string_content)
                 (string_end))))))
-      (ERROR
+      (assignment
         (dotted_name
           (identifier))
         (dotted_name
           (identifier)
-          (ERROR
-            (UNEXPECTED '?'))
-            (identifier))))
+          (identifier))))
 
 ================================================================================
 optional item expression
@@ -335,22 +332,22 @@ item = datalist?[0]
 --------------------------------------------------------------------------------
 
 (module
-  (assignment
-    (dotted_name
-      (identifier))
-    (list
-      (list
-        (integer))
-      (integer)
-      (integer)))
-  (assignment
-    (dotted_name
-      (identifier))
-    (subscript
-      (identifier)
-      (ERROR
-        (UNEXPECTED '?'))
-      (integer))))
+      (assignment
+        (dotted_name
+          (identifier))
+        (list
+          (list
+            (integer))
+          (integer)
+          (integer)))
+      (assignment
+        (dotted_name
+          (identifier))
+        (subscript
+          (identifier)
+          (ERROR
+            (UNEXPECTED '['))
+          (integer))))
 
 ================================================================================
 null coalesce expression
