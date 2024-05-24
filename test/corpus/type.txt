@@ -1,0 +1,320 @@
+================================================================================
+Basic Type
+================================================================================
+
+a: int = 1
+b: str = "s"
+c: float = 1.0
+d: bool = True
+
+--------------------------------------------------------------------------------
+
+(module
+    (assignment
+    (dotted_name
+        (identifier))
+    (type
+        (basic_type))
+    (integer))
+    (assignment
+    (dotted_name
+        (identifier))
+    (type
+        (basic_type))
+    (string
+        (string_start)
+        (string_content)
+        (string_end)))
+    (assignment
+    (dotted_name
+        (identifier))
+    (type
+        (basic_type))
+    (float))
+    (assignment
+    (dotted_name
+        (identifier))
+    (type
+        (basic_type))
+    (true)))
+
+================================================================================
+List Type
+================================================================================
+
+a: [int] = [1, 2, 3]
+
+--------------------------------------------------------------------------------
+
+(module
+    (assignment
+    (dotted_name
+        (identifier))
+    (type
+        (list_type
+        (type
+            (basic_type))))
+    (list
+        (integer)
+        (integer)
+        (integer))))
+
+================================================================================
+Dictionary Type
+================================================================================
+
+b: {str:str} = {k1 = "v1", k2 = "v2"}
+
+--------------------------------------------------------------------------------
+
+(module
+    (assignment
+    (dotted_name
+        (identifier))
+    (type
+        (dict_type
+        (type
+            (basic_type))
+        (type
+            (basic_type))))
+    (dictionary
+        (pair
+        (identifier)
+        (string
+            (string_start)
+            (string_content)
+            (string_end)))
+        (pair
+        (identifier)
+        (string
+            (string_start)
+            (string_content)
+            (string_end))))))
+
+================================================================================
+Schema Type
+================================================================================
+
+schema Person:
+    name: str = "Alice"
+    age: int = 10
+
+c: Person = Person {}
+
+--------------------------------------------------------------------------------
+
+(module
+    (schema_statement
+    (identifier)
+    (block
+        (assignment
+        (dotted_name
+            (identifier))
+        (type
+            (basic_type))
+        (string
+            (string_start)
+            (string_content)
+            (string_end)))
+        (assignment
+        (dotted_name
+            (identifier))
+        (type
+            (basic_type))
+        (integer))))
+    (assignment
+    (dotted_name
+        (identifier))
+    (type
+        (schema_type
+        (dotted_name
+            (identifier))))
+    (schema_expr
+        (dotted_name
+        (identifier))
+        (dictionary))))
+
+================================================================================
+Union Type
+================================================================================
+
+schema x[argc: int]:
+    p: int | str
+
+--------------------------------------------------------------------------------
+
+(module
+    (ERROR
+    (ERROR
+        (identifier))
+    (identifier)
+    (dotted_name
+        (identifier))
+    (ERROR
+        (type
+        (schema_type
+            (dotted_name
+            (identifier)))))
+    (type
+        (union_type
+        (type
+            (basic_type))
+        (type
+            (basic_type))))))
+
+================================================================================
+Any Type
+================================================================================
+
+schema Config:
+    literalConf: any = 1
+    dictConf: {str:any} = {key = "value"}
+    listConf: [any] = [1, "2", True]
+
+config = Config {}
+
+--------------------------------------------------------------------------------
+
+(module
+    (schema_statement
+    (identifier)
+    (block
+        (assignment
+        (dotted_name
+            (identifier))
+        (type
+            (basic_type))
+        (integer))
+        (assignment
+        (dotted_name
+            (identifier))
+        (type
+            (dict_type
+            (type
+                (basic_type))
+            (type
+                (basic_type))))
+        (dictionary
+            (pair
+            (identifier)
+            (string
+                (string_start)
+                (string_content)
+                (string_end)))))
+        (assignment
+        (dotted_name
+            (identifier))
+        (type
+            (list_type
+            (type
+                (basic_type))))
+        (list
+            (integer)
+            (string
+            (string_start)
+            (string_content)
+            (string_end))
+            (true)))))
+    (assignment
+    (dotted_name
+        (identifier))
+    (schema_expr
+        (dotted_name
+        (identifier))
+        (dictionary))))
+
+================================================================================
+Type Alias Statement with import
+================================================================================
+
+import pkg
+
+type Data = pkg.Data
+
+--------------------------------------------------------------------------------
+
+(module
+    (import_statement
+    (dotted_name
+        (identifier)))
+    (type_alias_statement
+    (type
+        (schema_type
+        (dotted_name
+            (identifier))))
+    (type
+        (schema_type
+        (dotted_name
+            (identifier)
+            (identifier))))))
+
+================================================================================
+Type Alias Statement with Union Type
+================================================================================
+
+type Color = "Red" | "Yellow" | "Blue"
+
+schema Config:
+    color: Color = "Red"
+
+config = Config {
+    color = "Blue"
+}
+
+--------------------------------------------------------------------------------
+
+(module
+    (type_alias_statement
+    (type
+        (schema_type
+        (dotted_name
+            (identifier))))
+    (type
+        (union_type
+        (type
+            (union_type
+            (type
+                (literal_type
+                (string
+                    (string_start)
+                    (string_content)
+                    (string_end))))
+            (type
+                (literal_type
+                (string
+                    (string_start)
+                    (string_content)
+                    (string_end))))))
+        (type
+            (literal_type
+            (string
+                (string_start)
+                (string_content)
+                (string_end)))))))
+    (schema_statement
+    (identifier)
+    (block
+        (assignment
+        (dotted_name
+            (identifier))
+        (type
+            (schema_type
+            (dotted_name
+                (identifier))))
+        (string
+            (string_start)
+            (string_content)
+            (string_end)))))
+    (assignment
+    (dotted_name
+        (identifier))
+    (schema_expr
+        (dotted_name
+        (identifier))
+        (dictionary
+        (pair
+            (identifier)
+            (string
+            (string_start)
+            (string_content)
+            (string_end)))))))
