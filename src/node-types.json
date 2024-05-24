@@ -338,6 +338,10 @@
         "required": true,
         "types": [
           {
+            "type": "dotted_name",
+            "named": true
+          },
+          {
             "type": "expression",
             "named": true
           }
@@ -2037,6 +2041,10 @@
   },
   {
     "type": ">>=",
+    "named": false
+  },
+  {
+    "type": "?.",
     "named": false
   },
   {

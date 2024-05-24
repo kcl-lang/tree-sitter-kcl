@@ -358,7 +358,7 @@ module.exports = grammar({
       $._dedent,
     ),
 
-    dotted_name: $ => prec(1, sep1($.identifier, '.')),
+    dotted_name: $ => prec(1, sep1($.identifier, choice('?.','.',))),
 
     // Patterns
 
@@ -553,7 +553,7 @@ module.exports = grammar({
     assignment: $ => seq(
       field('left', $.dotted_name),
       choice(
-        seq('=', field('right', $.expression)),
+        seq('=', field('right', choice($.dotted_name,$.expression,))),
         seq(':', field('type', $.type), '=', field('right', $.expression)),
       ),
     ),
