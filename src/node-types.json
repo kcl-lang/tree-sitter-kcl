@@ -176,15 +176,15 @@
         "named": true
       },
       {
-        "type": "optional_attribute",
-        "named": true
-      },
-      {
-        "type": "optional_item",
-        "named": true
-      },
-      {
         "type": "paren_expression",
+        "named": true
+      },
+      {
+        "type": "bracket_expression",
+        "named": true
+      },
+      {
+        "type": "braces_expression",
         "named": true
       },
       {
@@ -214,7 +214,39 @@
       {
         "type": "undefined",
         "named": true
-      }
+      },
+      {
+        "type": "optional_attribute",
+        "named": true
+      },
+      {
+        "type": "optional_item",
+        "named": true
+      },
+      {
+        "type": "null_coalesce",
+        "named": true
+      },
+      {
+        "type": "smoke_expr",
+        "named": true
+      },
+      {
+        "type": "nonstring_literal_expr",
+        "named": true
+      },
+      {
+        "type": "string_literal_expr",
+        "named": true
+      },
+      {
+        "type": "number_bin_suffix_expr",
+        "named": true
+      },
+      {
+        "type": "config_expr",
+        "named": true
+      }  
     ]
   },
   {
@@ -365,6 +397,203 @@
       }
     }
   },
+  {
+    "type": "nonstring_literal_expr",
+    "named": true,
+    "subtypes": [
+      {
+        "type": "integer",
+        "named": true
+      },
+      {
+        "type": "float",
+        "named": true
+      },
+      {
+        "type": "true",
+        "named": true
+      },
+      {
+        "type": "false",
+        "named": true
+      },
+      {
+        "type": "none",
+        "named": true
+      },
+      {
+        "type": "undefined",
+        "named": true
+      }
+    ]
+  },
+  {
+    "type": "string_literal_expr",
+    "named": true,
+    "definition": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "\""
+        },
+        {
+          "type": "PATTERN",
+          "value": "[^\"\n]*"
+        },
+        {
+          "type": "STRING",
+          "value": "\""
+        }
+      ]
+    }
+  },
+  {
+    "type": "number_bin_suffix_expr",
+    "named": true,
+    "fields": {
+      "value": {
+        "type": "string",
+        "named": true
+      }
+    }
+  }, 
+  {
+    "type": "optional_attribute",
+    "named": true,
+    "fields": {
+      "object": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "primary_expression",
+            "named": true
+          }
+        ]
+      },
+      "attribute": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "optional_item",
+    "named": true,
+    "fields": {
+      "object": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "primary_expression",
+            "named": true
+          }
+        ]
+      },
+      "index": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "null_coalesce",
+    "named": true,
+    "fields": {
+      "left": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "right": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "smoke_expr",
+    "named": true,
+    "fields": {
+      "expression": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "config_expr",
+    "named": true,
+    "fields": {
+      "entries": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "config_entry",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "config_entry",
+    "named": true,
+    "fields": {
+      "key": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "primary_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  }, 
   {
     "type": "augmented_assignment",
     "named": true,
@@ -1418,6 +1647,36 @@
         }
       ]
     }
+  },
+  {
+    "type": "bracket_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "braces_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    } 
   },
   {
     "type": "protocol_statement",

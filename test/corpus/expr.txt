@@ -166,6 +166,46 @@ b = data?.name
           (identifier))))
 
 ================================================================================
+quantifier filter expression
+================================================================================
+
+d = filter _, v in {a = "foo", b = "bar"} {v == "foo"}
+
+--------------------------------------------------------------------------------
+
+(module
+      (assignment
+        (dotted_name
+          (identifier))
+        (comparison_operator
+          (identifier)
+          (ERROR
+            (identifier)
+            (identifier))
+          (dictionary
+            (pair
+              (identifier)
+              (string
+                (string_start)
+                (string_content)
+                (string_end)))
+            (pair
+              (identifier)
+              (string
+                (string_start)
+                (string_content)
+                (string_end))))))
+      (MISSING _newline)
+      (dictionary
+        (ERROR
+          (comparison_operator
+            (identifier)
+            (string
+              (string_start)
+              (string_content)
+              (string_end))))))
+
+================================================================================
 attribute expression
 ================================================================================
 
@@ -273,6 +313,394 @@ item = datalist?[0]?
             (identifier)
             (integer)))
         (UNEXPECTED '\n')))
+
+================================================================================
+null coalesce expression
+================================================================================
+
+data = {"name": {"key": "value"}}
+name3 = data["name"] or "name3_value"
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (dictionary
+      (pair
+        (string
+          (string_start)
+          (string_content)
+          (string_end))
+        (dictionary
+          (pair
+            (string
+              (string_start)
+              (string_content)
+              (string_end))
+            (string
+              (string_start)
+              (string_content)
+              (string_end)))))))
+      (assignment
+        (dotted_name
+          (identifier))
+        (boolean_operator
+          (subscript
+            (identifier)
+            (string
+              (string_start)
+              (string_content)
+              (string_end)))
+          (string
+            (string_start)
+            (string_content)
+            (string_end)))))
+
+================================================================================
+paren expression
+================================================================================
+
+(a + b) * c
+
+--------------------------------------------------------------------------------
+
+(module
+  (binary_operator
+    (paren_expression
+      (binary_operator
+        (identifier)
+        (identifier)))
+    (identifier)))
+
+================================================================================
+boolean expression with 'and' operator
+================================================================================
+
+x = True and False
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (boolean_operator
+      (true)
+      (false))))
+
+================================================================================
+boolean expression with 'or' operator
+================================================================================
+
+y = True or False
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (boolean_operator
+      (true)
+      (false))))
+
+================================================================================
+not operator with boolean expression
+================================================================================
+
+x = not True
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (not_operator
+      (true))))
+
+================================================================================
+not operator with comparison expression
+================================================================================
+
+y = not (1 == 2)
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (not_operator
+      (paren_expression
+        (comparison_operator
+          (integer)
+          (integer))))))
+
+================================================================================
+lambda expression 
+================================================================================
+
+g = lambda x: str(x) -> int: x * 2
+
+--------------------------------------------------------------------------------
+
+(module
+  (ERROR
+    (dotted_name
+      (identifier))
+    (ERROR
+      (identifier))
+    (parameters
+          (identifier))
+        (type
+          (basic_type))
+        (identifier)
+        (integer)))
+
+================================================================================
+Comparison operators
+================================================================================
+
+a = 5 < 10
+b = "apple" == "orange"
+c = 3.14 > 3.14
+d = "hello" != "world"
+e = 10 <= 20
+f = 7 >= 7
+g = x in [1, 2, 3]
+h = y not in ["a", "b", "c"]
+i = x is None
+j = y is not None
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (comparison_operator
+          (integer)
+          (integer)))
+      (assignment
+        (dotted_name
+          (identifier))
+        (comparison_operator
+          (string
+            (string_start)
+            (string_content)
+            (string_end))
+          (string
+            (string_start)
+            (string_content)
+            (string_end))))
+      (assignment
+        (dotted_name
+          (identifier))
+        (comparison_operator
+          (float)
+          (float)))
+      (assignment
+        (dotted_name
+          (identifier))
+          (comparison_operator
+          (string
+            (string_start)
+            (string_content)
+            (string_end))
+          (string
+            (string_start)
+            (string_content)
+            (string_end))))
+      (assignment
+        (dotted_name
+          (identifier))
+      (comparison_operator
+          (integer)
+          (integer)))
+      (assignment
+        (dotted_name
+          (identifier))
+      (comparison_operator
+          (integer)
+          (integer)))
+      (assignment
+        (dotted_name
+          (identifier))
+      (comparison_operator
+          (identifier)
+          (list
+            (integer)
+            (integer)
+            (integer))))
+      (assignment
+        (dotted_name
+          (identifier))
+      (comparison_operator
+          (identifier)
+          (list
+            (string
+              (string_start)
+              (string_content)
+              (string_end))
+            (string
+              (string_start)
+              (string_content)
+              (string_end))
+            (string
+              (string_start)
+              (string_content)
+              (string_end)))))
+      (assignment
+        (dotted_name
+          (identifier))
+        (comparison_operator
+          (identifier)
+          (none)))
+      (assignment
+        (dotted_name
+          (identifier))
+        (comparison_operator
+          (identifier)
+          (none))))
+
+================================================================================
+Smoke expression 
+================================================================================
+
+"\"1\"\n"
+--------------------------------------------------------------------------------
+
+(module
+  (string
+    (string_start)
+    (string_content
+      (escape_sequence)
+      (escape_sequence)
+      (escape_sequence))
+    (string_end)))
+
+================================================================================
+Non-literal expressions
+================================================================================
+
+p = (a + b) * c  
+q = x and y       
+r = not x         
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (binary_operator
+      (paren_expression
+        (binary_operator
+          (identifier)
+          (identifier)))
+      (identifier)))
+  (assignment
+    (dotted_name
+      (identifier))
+    (boolean_operator
+      (identifier)
+      (identifier)))
+  (assignment
+    (dotted_name
+      (identifier))
+    (not_operator
+      (identifier))))
+
+================================================================================
+String literal expressions
+================================================================================
+
+"1234"
+--------------------------------------------------------------------------------
+
+(module
+  (string
+    (string_start)
+    (string_content)
+    (string_end)))
+
+================================================================================
+Number bin suffix expressions
+================================================================================
+
+1234Ki
+--------------------------------------------------------------------------------
+
+  (module
+      (integer))
+
+================================================================================
+Config expressions
+================================================================================
+
+{
+  "name" = {
+    "name": "alice"
+  },
+  "gender" = "female"
+}
+--------------------------------------------------------------------------------
+
+(module
+  (dictionary
+    (pair
+      (string
+        (string_start)
+        (string_content)
+        (string_end))
+      (dictionary
+        (pair
+          (string
+            (string_start)
+            (string_content)
+            (string_end))
+          (string
+            (string_start)
+            (string_content)
+            (string_end)))))
+    (pair
+      (string
+        (string_start)
+        (string_content)
+        (string_end))
+      (string
+        (string_start)
+        (string_content)
+        (string_end)))))
+
+================================================================================
+Bracket expressions
+================================================================================
+
+[2 + 3]
+--------------------------------------------------------------------------------
+
+(module
+  (list
+    (binary_operator
+      (integer)
+      (integer))))
+
+================================================================================
+Braces expressions
+================================================================================
+
+{ a = 2 }
+--------------------------------------------------------------------------------
+
+(module
+  (dictionary
+    (pair
+      (identifier)
+      (integer))))
 
 ================================================================================
 quantifier all expression
