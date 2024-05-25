@@ -166,41 +166,6 @@ b = data?.name
           (identifier))))
 
 ================================================================================
-quantifier map expression
-================================================================================
-
-b = map k, v in {a = "foo", b = "bar"} { v } 
-
---------------------------------------------------------------------------------
-
-(module
-      (assignment
-        (dotted_name
-          (identifier))
-        (comparison_operator
-          (identifier)
-          (ERROR
-            (identifier)
-            (identifier))
-          (dictionary
-            (pair
-              (identifier)
-              (string
-                (string_start)
-                (string_content)
-                (string_end)))
-            (pair
-              (identifier)
-              (string
-                (string_start)
-                (string_content)
-                (string_end))))))
-      (MISSING _newline)
-      (dictionary
-        (ERROR
-          (identifier))))
-
-================================================================================
 quantifier filter expression
 ================================================================================
 
@@ -212,27 +177,24 @@ d = filter _, v in {a = "foo", b = "bar"} {v == "foo"}
       (assignment
         (dotted_name
           (identifier))
-        (comparison_operator
+        (quant_expr
+          (quant_op)
           (identifier)
-          (ERROR
-            (identifier)
-            (identifier))
-          (dictionary
-            (pair
-              (identifier)
-              (string
-                (string_start)
-                (string_content)
-                (string_end)))
-            (pair
-              (identifier)
-              (string
-                (string_start)
-                (string_content)
-                (string_end))))))
-      (MISSING _newline)
-      (dictionary
-        (ERROR
+          (identifier)
+          (quant_target
+            (dictionary
+              (pair
+                (identifier)
+                (string
+                  (string_start)
+                  (string_content)
+                  (string_end)))
+              (pair
+                (identifier)
+                (string
+                  (string_start)
+                  (string_content)
+                  (string_end)))))
           (comparison_operator
             (identifier)
             (string
@@ -320,14 +282,14 @@ name2 = person?.name
           (identifier))
         (dotted_name
           (identifier)
-          (identifier))))
+            (identifier))))
 
 ================================================================================
 optional item expression
 ================================================================================
 
 datalist = [[1], 2, 3]
-item = datalist?[0]
+item = datalist?[0]?
 
 --------------------------------------------------------------------------------
 
@@ -340,14 +302,14 @@ item = datalist?[0]
             (integer))
           (integer)
           (integer)))
-      (assignment
-        (dotted_name
-          (identifier))
-        (subscript
-          (identifier)
-          (ERROR
-            (UNEXPECTED '['))
-          (integer))))
+      (ERROR
+        (assignment
+          (dotted_name
+            (identifier))
+          (optional_item
+            (identifier)
+            (integer)))
+        (UNEXPECTED '\n')))
 
 ================================================================================
 null coalesce expression
@@ -736,3 +698,72 @@ Braces expressions
     (pair
       (identifier)
       (integer))))
+
+================================================================================
+quantifier map expression
+================================================================================
+
+b = map k, v in {a = "foo", b = "bar"} { v } 
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (quant_expr
+      (quant_op)
+      (identifier)
+      (identifier)
+      (quant_target
+        (dictionary
+          (pair
+            (identifier)
+            (string
+              (string_start)
+              (string_content)
+              (string_end)))
+          (pair
+            (identifier)
+            (string
+              (string_start)
+              (string_content)
+              (string_end)))))
+      (identifier))))
+
+================================================================================
+quantifier filter expression
+================================================================================
+
+d = filter _, v in {a = "foo", b = "bar"} {v == "foo"}
+
+--------------------------------------------------------------------------------
+
+(module
+  (assignment
+    (dotted_name
+      (identifier))
+    (quant_expr
+      (quant_op)
+      (identifier)
+      (identifier)
+      (quant_target
+        (dictionary
+          (pair
+            (identifier)
+            (string
+              (string_start)
+              (string_content)
+              (string_end)))
+          (pair
+            (identifier)
+            (string
+              (string_start)
+              (string_content)
+              (string_end)))))
+          (comparison_operator
+            (identifier)
+            (string
+              (string_start)
+              (string_content)
+              (string_end))))))

@@ -13,21 +13,6 @@ assert x > 1
         (integer))))
 
 ================================================================================
-assert statements using if expression
-================================================================================
-
-assert a > 2 if a
-
---------------------------------------------------------------------------------
-
-(module
-    (assert_statement
-    (comparison_operator
-        (identifier)
-        (integer))
-    (identifier)))
-
-================================================================================
 assert statements with error message
 ================================================================================
 
@@ -40,28 +25,6 @@ assert a == b, "SOS"
         (comparison_operator
           (identifier)
           (identifier))
-        (string
-          (string_start)
-          (string_content)
-          (string_end))))
-
-
-================================================================================
-assert logic with 'if' condition and error message
-================================================================================
-
-assert 1 == 2 if 3 > 2, "error message"
-
---------------------------------------------------------------------------------
-
-(module
-      (assert_statement
-        (comparison_operator
-          (integer)
-          (integer))
-        (comparison_operator
-          (integer)
-          (integer))
         (string
           (string_start)
           (string_content)

@@ -76,6 +76,29 @@ const KEYWORDS = {
   TYPE: "type",
 }
 
+const RESERVED_KEYWORDS = {
+  PASS: "pass",
+  RETURN: "return",
+  VALIDATE: "validate",
+  RULE: "rule",
+  DEF: "def",
+  FLOW: "flow",
+  DEL: "del",
+  RAISE: "raise",
+  FROM: "from",
+  GLOBAL: "global",
+  NONLOCAL: "nonlocal",
+  EXCEPT: "except",
+  FINALLY: "finally",
+  WITH: "with",
+  TRY: "try",
+  WHILE: "while",
+  YEILD: "yield",
+  STRUCT: "struct",
+  CLASS: "class",
+  FINAL: "final",
+}
+
 const TYPES = {
   ANY: "any",
   STRING: "str",
@@ -225,12 +248,12 @@ module.exports = grammar({
       field('alias', $.identifier),
     ),
 
-    assert_statement: $ => seq(
+    assert_statement: $ => prec(3, seq(
       'assert',
       $.expression,
       optional(seq('if', $.expression)),
       optional(seq(',', $.expression))
-    ),
+    )),
 
     // Compound statements
 
@@ -239,6 +262,9 @@ module.exports = grammar({
       // TODO: schema and rule statement grammars
       $.schema_statement,
       $.rule_statement,
+      $.check_statement,
+      $.mixin_statement,
+      $.protocol_statement,
       $.decorated_definition,
     ),
 
@@ -284,6 +310,38 @@ module.exports = grammar({
       '}',
     )),
 
+    quant_expr: $ => seq(
+      field('quant_op', $.quant_op),
+      field('identifier', $.identifier),
+      ',',
+      field('identifier', $.identifier),
+      'in',
+      field('quant_target', $.quant_target),
+      '{',
+      field('expr1', $.expression),
+      '}'
+    ),
+
+    quant_target: $ => choice(
+      $.dictionary,
+      seq(
+        '[',
+        field('integer', $.integer),
+        repeat(seq(
+          ',',
+          field('integer', $.integer)
+        )),
+        ']'
+      )
+    ),
+    
+    quant_op: $ => choice(
+      'all',
+      'any',
+      'filter',
+      'map'
+    ),
+
     parameters: $ => seq(
       '(',
       optional($._parameters),
@@ -314,12 +372,40 @@ module.exports = grammar({
       field('body', $._suite),
     ),
 
+    mixin_statement: $ => seq(
+      'mixin',
+      field('name', $.identifier),
+      'for',
+      field('protocol', $.identifier),
+      ':',
+      field('body', $._suite),
+    ),
+
+    protocol_statement: $ => seq(
+      'protocol',
+      field('name', $.identifier),
+      ':',
+      field('body', $._suite),
+    ),
+
     rule_statement: $ => seq(
       'rule',
       field('name', $.identifier),
       ':',
       field('body', $._suite),
     ),
+
+    check_statement: $ => prec.left(seq(
+      'check',
+      ':',
+      repeat1(
+        seq(
+          field('quant_expr', $.quant_expr),
+          ',',
+          field('error_message', $.string)
+        )
+      )
+    )), 
 
     argument_list: $ => seq(
       '(',
@@ -337,7 +423,10 @@ module.exports = grammar({
       repeat1($.decorator),
       field('definition', choice(
         $.schema_statement,
+        $.mixin_statement,
         $.rule_statement,
+        $.protocol_statement,
+        $.check_statement,
       )),
     ),
 
@@ -390,14 +479,14 @@ module.exports = grammar({
 
     // Expressions
 
-    expression: $ => choice(
+    expression: $ => prec(1, choice(
       $.comparison_operator,
       $.not_operator,
       $.boolean_operator,
       $.primary_expression,
       $.as_expression,
       $.conditional_expression,
-    ),
+    )),
 
     as_expression: $ => prec.left(seq(
       $.expression,
@@ -424,17 +513,14 @@ module.exports = grammar({
       $.dictionary,
       $.dictionary_comprehension,
       $.lambda_expr,
+      $.quant_expr,
       $.schema_expr,
       $.paren_expression,
-      $.bracket_expression,
       $.braces_expression,
       $.optional_attribute,
       $.optional_item,
       $.null_coalesce,
-      $.smoke_expr,
-      $.nonstring_literal_expr,
       $.string_literal_expr,
-      $.number_bin_suffix_expr,
       $.config_expr,
     ),
 
@@ -442,17 +528,8 @@ module.exports = grammar({
       '(', $.expression, ')'
     ),
 
-    bracket_expression: $ => seq(
-      '[', $.expression, ']'
-    ),
-
     braces_expression: $ => seq(
       '{', $.expression, '}'
-    ),
-
-    smoke_expr: $ => seq(
-      $.expression,
-      '\n'
     ),
 
     not_operator: $ => prec(PREC.not, seq(
@@ -473,32 +550,21 @@ module.exports = grammar({
       )),
     ),
 
-    nonstring_literal_expr: $ => choice(
-      $.integer,
-      $.float,
-      $.true,
-      $.false,
-      $.none,
-      $.undefined
-    ),
-
     string_literal_expr: $ => seq(
       '"',
       /[^"]*/, 
       '"'
     ),
 
-    number_bin_suffix_expr: $ => /\d+[kKmMgGtT]?[iI]?/,
-
-    config_expr: $ => seq(
+    config_expr: $ => prec(1, seq(
       '{',
-      sepBy(',', seq(
+      sep1(',', seq(
         field('key', $.identifier),
         '=',
         field('value', $.expression)
       )),
       '}'
-    ),
+    )),
     
     binary_operator: $ => {
       const table = [
@@ -530,7 +596,7 @@ module.exports = grammar({
       field('argument', $.primary_expression),
     )),
 
-    comparison_operator: $ => prec.left(PREC.compare, seq(
+    comparison_operator: $ => prec.left(2, seq(
       $.primary_expression,
       repeat1(seq(
         field('operators',
@@ -663,12 +729,12 @@ module.exports = grammar({
       ']',
     ),
 
-    dictionary: $ => seq(
+    dictionary: $ => prec(2, seq(
       '{',
       optional(commaSep1(choice($.pair, $.dictionary_splat))),
       optional(','),
-      '}',
-    ),
+      '}'
+    )),
 
     pair: $ => seq(
       field('key', $.expression),
@@ -698,12 +764,9 @@ module.exports = grammar({
       )),
     ),
 
-    _collection_elements: $ => seq(
-      commaSep1(choice(
-        $.expression, $.list_splat,
-      )),
-      optional(','),
-    ),
+    _collection_elements: $ => prec(1, commaSep1(choice(
+      $.expression, $.list_splat,
+    ))),
 
     for_in_clause: $ => prec.left(seq(
       'for',
