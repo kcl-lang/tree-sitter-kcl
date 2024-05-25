@@ -381,7 +381,7 @@
             "name": "parameters",
             "content": {
               "type": "SYMBOL",
-              "name": "parameters"
+              "name": "_parameters"
             }
           },
           {
@@ -2148,6 +2148,28 @@
                   }
                 }
               ]
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ":"
+                  },
+                  {
+                    "type": "FIELD",
+                    "name": "type",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "type"
+                    }
+                  }
+                ]
+              },
+              "named": false,
+              "value": "null_assignment"
             }
           ]
         }
@@ -3822,5 +3844,24 @@
     "expression",
     "primary_expression",
     "parameter"
-  ]
+  ],
+  "PREC": {
+    "typed_parameter": -1,
+    "conditional": -1,
+    "or": 10,
+    "and": 11,
+    "not": 12,
+    "compare": 13,
+    "bitwise_or": 14,
+    "bitwise_and": 15,
+    "xor": 16,
+    "shift": 17,
+    "plus": 18,
+    "times": 19,
+    "unary": 20,
+    "power": 21,
+    "call": 22,
+    "as": 23
+  }
 }
+

@@ -217,12 +217,11 @@ name1 = person.name
  (module
       (schema_statement
         (identifier)
-        (ERROR
-          (dotted_name
-            (identifier))
-          (type
-            (basic_type)))
-        (block))
+        (block
+          (assignment
+            (dotted_name
+              (identifier))
+            (basic_type))))
       (assignment
         (dotted_name
           (identifier))
@@ -258,12 +257,11 @@ name2 = person?.name
 (module
       (schema_statement
         (identifier)
-        (ERROR
-          (dotted_name
-            (identifier))
-          (type
-            (basic_type)))
-        (block))
+        (block
+          (assignment
+            (dotted_name
+              (identifier))
+            (basic_type))))
       (assignment
         (dotted_name
           (identifier))
@@ -282,14 +280,14 @@ name2 = person?.name
           (identifier))
         (dotted_name
           (identifier)
-            (identifier))))
+          (identifier))))
 
 ================================================================================
 optional item expression
 ================================================================================
 
 datalist = [[1], 2, 3]
-item = datalist?[0]?
+item = datalist?[0]
 
 --------------------------------------------------------------------------------
 
@@ -302,14 +300,12 @@ item = datalist?[0]?
             (integer))
           (integer)
           (integer)))
-      (ERROR
-        (assignment
-          (dotted_name
-            (identifier))
-          (optional_item
-            (identifier)
-            (integer)))
-        (UNEXPECTED '\n')))
+      (assignment
+        (dotted_name
+          (identifier))
+        (optional_item
+          (identifier)
+          (integer))))
 
 ================================================================================
 null coalesce expression
@@ -440,22 +436,31 @@ y = not (1 == 2)
 lambda expression 
 ================================================================================
 
-g = lambda x: str(x) -> int: x * 2
+g = lambda x: str, y: int -> int { 
+  x * y
+}
 
 --------------------------------------------------------------------------------
 
 (module
-  (ERROR
-    (dotted_name
-      (identifier))
-    (ERROR
-      (identifier))
-    (parameters
+      (assignment
+        (dotted_name
           (identifier))
-        (type
-          (basic_type))
-        (identifier)
-        (integer)))
+        (lambda_expr
+          (typed_parameter
+            (identifier)
+            (type
+              (basic_type)))
+          (typed_parameter
+            (identifier)
+            (type
+              (basic_type)))
+          (type
+            (basic_type))
+          (block
+            (binary_operator
+              (identifier)
+              (identifier))))))
 
 ================================================================================
 Comparison operators

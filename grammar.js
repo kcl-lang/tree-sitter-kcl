@@ -298,7 +298,7 @@ module.exports = grammar({
 
     lambda_expr: $ => prec(PREC.call, seq(
       'lambda',
-      field('parameters', $.parameters),
+      field('parameters', $._parameters),
       optional(
         seq(
           '->',
@@ -621,6 +621,7 @@ module.exports = grammar({
       choice(
         seq('=', field('right', choice($.dotted_name,$.expression,))),
         seq(':', field('type', $.type), '=', field('right', $.expression)),
+        alias(seq(':',field('type', $.type)),'null_assignment'),
       ),
     ),
 

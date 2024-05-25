@@ -59,14 +59,13 @@ protocol DataProtocol:
 --------------------------------------------------------------------------------
 
 (module
-    (protocol_statement
-    (identifier)
-    (ERROR
-        (dotted_name
-        (identifier))
-        (type
-        (basic_type)))
-    (block)))
+      (protocol_statement
+        (identifier)
+        (block
+          (assignment
+            (dotted_name
+              (identifier))
+            (basic_type)))))
 
 ================================================================================
 Rule Statement
@@ -110,97 +109,75 @@ schema Config:
 --------------------------------------------------------------------------------
 
 (module
-    (ERROR
-    (schema_statement
+      (schema_statement
         (identifier)
-        (ERROR
-        (dotted_name
-            (identifier))
-        (ERROR
-            (type
+        (block
+          (assignment
+            (dotted_name
+              (identifier))
             (list_type
-                (type
+              (type
                 (dict_type
-                    (type
+                  (type
                     (basic_type))
-                    (type
+                  (type
                     (schema_type
-                        (dotted_name
+                      (dotted_name
                         (MISSING identifier))))))))
-            (identifier)
-            (type
+          (assignment
+            (dotted_name
+              (identifier))
             (list_type
-                (type
+              (type
                 (dict_type
-                    (type
+                  (type
                     (basic_type))
-                    (type
+                  (type
                     (schema_type
-                        (dotted_name
+                      (dotted_name
                         (MISSING identifier))))))))
-            (identifier)
-            (identifier)
-            (identifier)
-            (type
-            (schema_type
-                (dotted_name
-                (identifier)))))
-        (ERROR
-            (type
-            (schema_type
-                (dotted_name
-                (identifier)
-                (identifier))))
-            (type
-            (literal_type
-                (string
-                (string_start)
-                (string_content)
-                (string_end))))
-            (type
-            (schema_type
-                (dotted_name
-                (identifier)
-                (identifier))))
-            (type
-            (literal_type
-                (string
-                (string_start)
-                (string_content)
-                (string_end))))
-            (type
-            (literal_type
-                (string
-                (string_start)
-                (string_content)
-                (string_end))))
-            (identifier)
-            (identifier)
-            (identifier)
-            (type
-            (schema_type
-                (dotted_name
-                (identifier)))))
-        (ERROR
-            (type
-            (schema_type
-                (dotted_name
-                (identifier)
-                (identifier))))
-            (identifier))
-        (type
-            (list_type
+          (ERROR
+            (quant_op)
             (ERROR
-                (type
-                (literal_type
+              (identifier)
+              (identifier))
+            (identifier)
+            (identifier)
+            (ERROR
+              (identifier))
+            (string
+              (string_start)
+              (string_content)
+              (string_end))
+            (identifier)
+            (ERROR
+              (identifier))
+            (ERROR
+              (string
+                (string_start)
+                (string_content)
+                (string_end))
+              (string
+                (string_start)
+                (string_content)
+                (string_end))
+              (identifier))
+            (identifier)
+            (schema_expr
+              (dotted_name
+                (identifier))
+              (dictionary
+                (ERROR
+                  (dotted_name
+                    (identifier)
+                    (identifier))
+                  (subscript
+                    (identifier)
                     (string
-                    (string_start)
-                    (string_content)
-                    (string_end)))))
-            (type
-                (literal_type
-                (string
-                    (string_start)
-                    (string_content)
-                    (string_end)))))))
-        (block))))
+                      (string_start)
+                      (string_content)
+                      (string_end))
+                    (string
+                      (string_start)
+                      (string_content)
+                      (string_end))))))))))
