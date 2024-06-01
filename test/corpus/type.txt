@@ -79,13 +79,15 @@ b: {str:str} = {k1 = "v1", k2 = "v2"}
             (basic_type))))
     (dictionary
         (pair
-        (identifier)
+        (attribute
+            (identifier))
         (string
             (string_start)
             (string_content)
             (string_end)))
         (pair
-        (identifier)
+        (attribute
+            (identifier))
         (string
             (string_start)
             (string_content)
@@ -190,7 +192,8 @@ config = Config {}
                 (basic_type))))
         (dictionary
             (pair
-            (identifier)
+            (attribute
+                (identifier))
             (string
                 (string_start)
                 (string_content)
@@ -307,7 +310,8 @@ config = Config {
         (identifier))
         (dictionary
         (pair
-            (identifier)
+            (attribute
+                (identifier))
             (string
             (string_start)
             (string_content)

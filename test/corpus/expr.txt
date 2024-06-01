@@ -59,7 +59,8 @@ x = True if enabled else False
       (identifier))
     (conditional_expression
       (true)
-      (identifier)
+      (attribute
+        (identifier))
       (false))))
 
 ================================================================================
@@ -72,7 +73,8 @@ print("hello world", end="")
 
 (module
   (call
-    (identifier)
+    (attribute
+      (identifier))
     (argument_list
       (string
         (string_start)
@@ -95,12 +97,15 @@ Comprehensions
 (module
       (list_comprehension
         (binary_operator
-          (identifier)
-          (identifier))
+          (attribute
+            (identifier))
+          (attribute
+            (identifier)))
         (for_in_clause
           (identifier)
           (call
-            (identifier)
+            (attribute
+              (identifier))
             (argument_list
               (integer))))))
 
@@ -119,7 +124,8 @@ result = myDict.key
           (identifier))
         (dictionary
           (pair
-            (identifier)
+            (attribute
+              (identifier))
             (string
               (string_start)
               (string_content)
@@ -142,65 +148,31 @@ b = data?.name
 --------------------------------------------------------------------------------
 
 (module
-      (assignment
-        (dotted_name
+  (assignment
+    (dotted_name
+      (identifier))
+    (dictionary
+      (pair
+        (attribute
           (identifier))
-        (dictionary
-          (pair
-            (identifier)
-            (string
-              (string_start)
-              (string_content)
-              (string_end)))))
-      (assignment
-        (dotted_name
-          (identifier))
-        (dotted_name
-          (identifier)
-          (identifier)))
-      (assignment
-        (dotted_name
-          (identifier))
-        (dotted_name
-          (identifier)
+        (string
+          (string_start)
+          (string_content)
+          (string_end)))))
+  (assignment
+    (dotted_name
+      (identifier))
+    (optional_attribute
+      (attribute
+        (identifier))
+      (identifier)))
+  (assignment
+    (dotted_name
+      (identifier))
+    (optional_attribute
+      (attribute
+        (identifier))
           (identifier))))
-
-================================================================================
-quantifier filter expression
-================================================================================
-
-d = filter _, v in {a = "foo", b = "bar"} {v == "foo"}
-
---------------------------------------------------------------------------------
-
-(module
-      (assignment
-        (dotted_name
-          (identifier))
-        (quant_expr
-          (quant_op)
-          (identifier)
-          (identifier)
-          (quant_target
-            (dictionary
-              (pair
-                (identifier)
-                (string
-                  (string_start)
-                  (string_content)
-                  (string_end)))
-              (pair
-                (identifier)
-                (string
-                  (string_start)
-                  (string_content)
-                  (string_end)))))
-          (comparison_operator
-            (identifier)
-            (string
-              (string_start)
-              (string_content)
-              (string_end))))))
 
 ================================================================================
 attribute expression
@@ -230,7 +202,8 @@ name1 = person.name
             (identifier))
           (dictionary
             (pair
-              (identifier)
+              (attribute
+                (identifier))
               (string
                 (string_start)
                 (string_content)
@@ -270,7 +243,8 @@ name2 = person?.name
             (identifier))
           (dictionary
             (pair
-              (identifier)
+              (attribute
+                (identifier))
               (string
                 (string_start)
                 (string_content)
@@ -278,8 +252,9 @@ name2 = person?.name
       (assignment
         (dotted_name
           (identifier))
-        (dotted_name
-          (identifier)
+        (optional_attribute
+          (attribute
+            (identifier))
           (identifier))))
 
 ================================================================================
@@ -304,7 +279,8 @@ item = datalist?[0]
         (dotted_name
           (identifier))
         (optional_item
-          (identifier)
+          (attribute
+            (identifier))
           (integer))))
 
 ================================================================================
@@ -341,7 +317,8 @@ name3 = data["name"] or "name3_value"
           (identifier))
         (boolean_operator
           (subscript
-            (identifier)
+            (attribute
+             (identifier))
             (string
               (string_start)
               (string_content)
@@ -363,9 +340,12 @@ paren expression
   (binary_operator
     (paren_expression
       (binary_operator
-        (identifier)
-        (identifier)))
-    (identifier)))
+        (attribute
+          (identifier))
+        (attribute
+          (identifier))))
+    (attribute
+      (identifier))))
 
 ================================================================================
 boolean expression with 'and' operator
@@ -443,24 +423,26 @@ g = lambda x: str, y: int -> int {
 --------------------------------------------------------------------------------
 
 (module
-      (assignment
-        (dotted_name
-          (identifier))
-        (lambda_expr
-          (typed_parameter
-            (identifier)
-            (type
-              (basic_type)))
-          (typed_parameter
-            (identifier)
-            (type
-              (basic_type)))
-          (type
-            (basic_type))
-          (block
-            (binary_operator
-              (identifier)
-              (identifier))))))
+  (assignment
+    (dotted_name
+      (identifier))
+    (lambda_expr
+      (typed_parameter
+        (identifier)
+        (type
+          (basic_type)))
+      (typed_parameter
+        (identifier)
+        (type
+          (basic_type)))
+      (type
+        (basic_type))
+      (block
+        (binary_operator
+          (attribute
+            (identifier))
+          (attribute
+            (identifier)))))))
 
 ================================================================================
 Comparison operators
@@ -532,7 +514,8 @@ j = y is not None
         (dotted_name
           (identifier))
       (comparison_operator
-          (identifier)
+          (attribute
+            (identifier))
           (list
             (integer)
             (integer)
@@ -541,7 +524,8 @@ j = y is not None
         (dotted_name
           (identifier))
       (comparison_operator
-          (identifier)
+          (attribute
+            (identifier))
           (list
             (string
               (string_start)
@@ -559,13 +543,15 @@ j = y is not None
         (dotted_name
           (identifier))
         (comparison_operator
-          (identifier)
+          (attribute
+            (identifier))
           (none)))
       (assignment
         (dotted_name
           (identifier))
         (comparison_operator
-          (identifier)
+          (attribute
+            (identifier))
           (none))))
 
 ================================================================================
@@ -601,20 +587,26 @@ r = not x
     (binary_operator
       (paren_expression
         (binary_operator
-          (identifier)
-          (identifier)))
-      (identifier)))
+          (attribute
+            (identifier))
+          (attribute
+            (identifier))))
+      (attribute
+        (identifier))))
   (assignment
     (dotted_name
       (identifier))
     (boolean_operator
-      (identifier)
-      (identifier)))
+      (attribute
+        (identifier))
+      (attribute
+        (identifier))))
   (assignment
     (dotted_name
       (identifier))
     (not_operator
-      (identifier))))
+      (attribute
+        (identifier)))))
 
 ================================================================================
 String literal expressions
@@ -701,7 +693,8 @@ Braces expressions
 (module
   (dictionary
     (pair
-      (identifier)
+      (attribute
+        (identifier))
       (integer))))
 
 ================================================================================
@@ -723,18 +716,21 @@ b = map k, v in {a = "foo", b = "bar"} { v }
       (quant_target
         (dictionary
           (pair
-            (identifier)
+            (attribute
+              (identifier))
             (string
               (string_start)
               (string_content)
               (string_end)))
           (pair
-            (identifier)
+            (attribute
+              (identifier))
             (string
               (string_start)
               (string_content)
               (string_end)))))
-      (identifier))))
+      (attribute
+        (identifier)))))
 
 ================================================================================
 quantifier filter expression
@@ -755,19 +751,22 @@ d = filter _, v in {a = "foo", b = "bar"} {v == "foo"}
       (quant_target
         (dictionary
           (pair
-            (identifier)
+            (attribute
+              (identifier))
             (string
               (string_start)
               (string_content)
               (string_end)))
           (pair
-            (identifier)
+            (attribute
+              (identifier))
             (string
               (string_start)
               (string_content)
               (string_end)))))
           (comparison_operator
-            (identifier)
+            (attribute
+              (identifier))
             (string
               (string_start)
               (string_content)

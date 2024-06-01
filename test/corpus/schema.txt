@@ -22,34 +22,6 @@ schema Person:
             (string_end))))))
 
 ================================================================================
-Mixin Statement
-================================================================================
-
-mixin FullNameMixin for PersonProtocol:
-    fullName = "{} {}".format(firstName, lastName)
-
---------------------------------------------------------------------------------
-
-(module
-    (mixin_statement
-    (identifier)
-    (identifier)
-    (block
-        (assignment
-        (dotted_name
-            (identifier))
-        (call
-            (attribute
-            (string
-                (string_start)
-                (string_content)
-                (string_end))
-            (identifier))
-            (argument_list
-            (identifier)
-            (identifier)))))))
-
-================================================================================
 Protocol Statement
 ================================================================================
 
@@ -77,17 +49,18 @@ rule SomeRule:
 --------------------------------------------------------------------------------
 
 (module
-      (rule_statement
-        (identifier)
-        (block
-          (if_statement
-            (comparison_operator
-              (identifier)
-              (integer))
-            (string
-              (string_start)
-              (string_content)
-              (string_end))))))
+  (rule_statement
+    (identifier)
+    (block
+      (if_statement
+        (comparison_operator
+          (attribute
+            (identifier))
+          (integer))
+        (string
+          (string_start)
+          (string_content)
+          (string_end))))))
 
 ================================================================================
 Schema Statement with Check
@@ -162,3 +135,26 @@ schema Config:
                   (string_start)
                   (string_content)
                   (string_end))))))))
+
+================================================================================
+Decorated of a Schema
+================================================================================
+
+@deprecated
+schema ObsoleteSchema:
+    attr: str
+
+--------------------------------------------------------------------------------
+
+(module
+  (decorated_definition
+    (decorator
+      (attribute
+        (identifier)))
+    (schema_statement
+      (identifier)
+      (block
+        (assignment
+          (dotted_name
+            (identifier))
+          (basic_type))))))

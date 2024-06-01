@@ -9,7 +9,8 @@ assert x > 1
 (module
     (assert_statement
     (comparison_operator
-        (identifier)
+        (attribute
+    (identifier))
         (integer))))
 
 ================================================================================
@@ -23,8 +24,10 @@ assert a == b, "SOS"
 (module
       (assert_statement
         (comparison_operator
-          (identifier)
-          (identifier))
+          (attribute
+            (identifier))
+          (attribute
+            (identifier)))
         (string
           (string_start)
           (string_content)

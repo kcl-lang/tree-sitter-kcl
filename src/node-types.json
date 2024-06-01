@@ -367,7 +367,17 @@
     "type": "attribute",
     "named": true,
     "fields": {
-      "attribute": {
+      "is_mutable": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "isMutableFlag",
+            "named": true
+          }
+        ]
+      },
+      "name": {
         "multiple": false,
         "required": true,
         "types": [
@@ -377,12 +387,26 @@
           }
         ]
       },
-      "object": {
+      "type": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
-            "type": "primary_expression",
+            "type": "type",
+            "named": true
+          },
+          {
+            "type": "union_type",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
             "named": true
           }
         ]
@@ -2343,6 +2367,10 @@
   {
     "type": "is not",
     "named": false
+  },
+  {
+    "type": "isMutableFlag",
+    "named": true
   },
   {
     "type": "k",

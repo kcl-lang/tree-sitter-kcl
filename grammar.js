@@ -460,7 +460,7 @@ module.exports = grammar({
       $._dedent,
     ),
 
-    dotted_name: $ => prec(1, sep1($.identifier, choice('?.','.',))),
+    dotted_name: $ => prec.left(1, sep1($.identifier, choice('?.','.',))),
 
     // Patterns
 
@@ -653,12 +653,17 @@ module.exports = grammar({
       field('right', $.schema_expr),
     ),
 
-    attribute: $ => prec(PREC.call, seq(
-      field('object', $.primary_expression),
-      '.',
-      field('attribute', $.identifier),
+    attribute: $ => prec.right(11, seq(
+      field('name', $.identifier),
+      optional(seq(
+        field('is_mutable', $.isMutableFlag),
+        field('type', choice($.type, $.union_type)),
+        optional(seq('=', field('value', $.expression)))
+      ))
     )),
-
+    
+    isMutableFlag: $ => '_',
+    
     optional_attribute: $ => prec(PREC.call, seq(
       field('object', $.primary_expression),
       '?.',
@@ -816,6 +821,8 @@ module.exports = grammar({
         $._string_content,
       ))),
 
+    escape_interpolation: _ => token.immediate(/\$\{[^}]*\}/),
+
     escape_sequence: _ => token.immediate(prec(1, seq(
       '\\',
       choice(
@@ -830,6 +837,8 @@ module.exports = grammar({
     ))),
 
     _not_escape_sequence: _ => token.immediate('\\'),
+
+    _string_content: _ => token.immediate(/[^\\{}]+/),
 
     integer: $ => token(choice(
       seq(
