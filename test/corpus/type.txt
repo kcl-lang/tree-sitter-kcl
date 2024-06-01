@@ -138,21 +138,17 @@ c: Person = Person {}
 Union Type
 ================================================================================
 
-schema x[argc: int]:
-    p: int | str
+schema x:
+    a: int | str
 
 --------------------------------------------------------------------------------
 
 (module
       (schema_statement
-        (ERROR
-          (identifier))
         (identifier)
         (block
           (assignment
             (dotted_name
-              (identifier))
-            (ERROR
               (identifier))
             (union_type
               (type
