@@ -660,7 +660,7 @@
     "fields": {
       "error_message": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "string",
@@ -668,7 +668,7 @@
           }
         ]
       },
-      "quant_expr": {
+      "expr1": {
         "multiple": true,
         "required": true,
         "types": [
@@ -735,6 +735,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "dotted_name",
+          "named": true
+        },
         {
           "type": "primary_expression",
           "named": true
@@ -872,7 +876,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "type",
@@ -1088,10 +1092,30 @@
       },
       "consequence": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "error_message": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      },
+      "expr1": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
             "named": true
           }
         ]
@@ -1608,6 +1632,16 @@
     "type": "quant_target",
     "named": true,
     "fields": {
+      "dictionary_or_list": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
       "integer": {
         "multiple": true,
         "required": false,

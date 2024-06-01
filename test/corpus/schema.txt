@@ -77,17 +77,17 @@ rule SomeRule:
 --------------------------------------------------------------------------------
 
 (module
-    (rule_statement
-    (identifier)
-    (ERROR
-        (comparison_operator
+      (rule_statement
         (identifier)
-        (integer)))
-    (block
-        (string
-        (string_start)
-        (string_content)
-        (string_end)))))
+        (block
+          (if_statement
+            (comparison_operator
+              (identifier)
+              (integer))
+            (string
+              (string_start)
+              (string_content)
+              (string_end))))))
 
 ================================================================================
 Schema Statement with Check
@@ -96,10 +96,9 @@ Schema Statement with Check
 schema Config:
     volumes: [{str:}]
     services: [{str:}]
-
     check:
         all service in services {
-            service.clusterIP == "NONE" if service.type == "ClusterIP"
+            service.clusterIP == "NONE" 
         }, "invalid cluster ip"
 
         any volume in volumes {
@@ -107,7 +106,6 @@ schema Config:
         }
 
 --------------------------------------------------------------------------------
-
 (module
       (schema_statement
         (identifier)
@@ -119,11 +117,7 @@ schema Config:
               (type
                 (dict_type
                   (type
-                    (basic_type))
-                  (type
-                    (schema_type
-                      (dotted_name
-                        (MISSING identifier))))))))
+                    (basic_type))))))
           (assignment
             (dotted_name
               (identifier))
@@ -131,53 +125,40 @@ schema Config:
               (type
                 (dict_type
                   (type
-                    (basic_type))
-                  (type
-                    (schema_type
-                      (dotted_name
-                        (MISSING identifier))))))))
-          (ERROR
-            (quant_op)
-            (ERROR
+                    (basic_type))))))
+          (check_statement
+            (quant_expr
+              (quant_op)
               (identifier)
-              (identifier))
-            (identifier)
-            (identifier)
-            (ERROR
-              (identifier))
+              (quant_target
+                (identifier))
+              (comparison_operator
+                (dotted_name
+                  (identifier)
+                  (identifier))
+                (string
+                  (string_start)
+                  (string_content)
+                  (string_end))))
             (string
               (string_start)
               (string_content)
-              (string_end))
+              (string_end)))
+          (quant_expr
+            (quant_op)
             (identifier)
-            (ERROR
+            (quant_target
               (identifier))
-            (ERROR
-              (string
-                (string_start)
-                (string_content)
-                (string_end))
-              (string
-                (string_start)
-                (string_content)
-                (string_end))
-              (identifier))
-            (identifier)
-            (schema_expr
+            (comparison_operator
               (dotted_name
+                (identifier)
                 (identifier))
-              (dictionary
-                (ERROR
-                  (dotted_name
-                    (identifier)
-                    (identifier))
-                  (subscript
-                    (identifier)
-                    (string
-                      (string_start)
-                      (string_content)
-                      (string_end))
-                    (string
-                      (string_start)
-                      (string_content)
-                      (string_end))))))))))
+              (list
+                (string
+                  (string_start)
+                  (string_content)
+                  (string_end))
+                (string
+                  (string_start)
+                  (string_content)
+                  (string_end))))))))
