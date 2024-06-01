@@ -59,14 +59,13 @@ protocol DataProtocol:
 --------------------------------------------------------------------------------
 
 (module
-    (protocol_statement
-    (identifier)
-    (ERROR
-        (dotted_name
-        (identifier))
-        (type
-        (basic_type)))
-    (block)))
+      (protocol_statement
+        (identifier)
+        (block
+          (assignment
+            (dotted_name
+              (identifier))
+            (basic_type)))))
 
 ================================================================================
 Rule Statement
@@ -78,17 +77,17 @@ rule SomeRule:
 --------------------------------------------------------------------------------
 
 (module
-    (rule_statement
-    (identifier)
-    (ERROR
-        (comparison_operator
+      (rule_statement
         (identifier)
-        (integer)))
-    (block
-        (string
-        (string_start)
-        (string_content)
-        (string_end)))))
+        (block
+          (if_statement
+            (comparison_operator
+              (identifier)
+              (integer))
+            (string
+              (string_start)
+              (string_content)
+              (string_end))))))
 
 ================================================================================
 Schema Statement with Check
@@ -97,10 +96,9 @@ Schema Statement with Check
 schema Config:
     volumes: [{str:}]
     services: [{str:}]
-
     check:
         all service in services {
-            service.clusterIP == "NONE" if service.type == "ClusterIP"
+            service.clusterIP == "NONE" 
         }, "invalid cluster ip"
 
         any volume in volumes {
@@ -108,99 +106,59 @@ schema Config:
         }
 
 --------------------------------------------------------------------------------
-
 (module
-    (ERROR
-    (schema_statement
+      (schema_statement
         (identifier)
-        (ERROR
-        (dotted_name
-            (identifier))
-        (ERROR
-            (type
+        (block
+          (assignment
+            (dotted_name
+              (identifier))
             (list_type
-                (type
+              (type
                 (dict_type
-                    (type
-                    (basic_type))
-                    (type
-                    (schema_type
-                        (dotted_name
-                        (MISSING identifier))))))))
-            (identifier)
-            (type
+                  (type
+                    (basic_type))))))
+          (assignment
+            (dotted_name
+              (identifier))
             (list_type
-                (type
+              (type
                 (dict_type
-                    (type
-                    (basic_type))
-                    (type
-                    (schema_type
-                        (dotted_name
-                        (MISSING identifier))))))))
-            (identifier)
-            (identifier)
-            (identifier)
-            (type
-            (schema_type
+                  (type
+                    (basic_type))))))
+          (check_statement
+            (quant_expr
+              (quant_op)
+              (identifier)
+              (quant_target
+                (identifier))
+              (comparison_operator
                 (dotted_name
-                (identifier)))))
-        (ERROR
-            (type
-            (schema_type
-                (dotted_name
+                  (identifier)
+                  (identifier))
+                (string
+                  (string_start)
+                  (string_content)
+                  (string_end))))
+            (string
+              (string_start)
+              (string_content)
+              (string_end)))
+          (quant_expr
+            (quant_op)
+            (identifier)
+            (quant_target
+              (identifier))
+            (comparison_operator
+              (dotted_name
                 (identifier)
-                (identifier))))
-            (type
-            (literal_type
+                (identifier))
+              (list
                 (string
-                (string_start)
-                (string_content)
-                (string_end))))
-            (type
-            (schema_type
-                (dotted_name
-                (identifier)
-                (identifier))))
-            (type
-            (literal_type
+                  (string_start)
+                  (string_content)
+                  (string_end))
                 (string
-                (string_start)
-                (string_content)
-                (string_end))))
-            (type
-            (literal_type
-                (string
-                (string_start)
-                (string_content)
-                (string_end))))
-            (identifier)
-            (identifier)
-            (identifier)
-            (type
-            (schema_type
-                (dotted_name
-                (identifier)))))
-        (ERROR
-            (type
-            (schema_type
-                (dotted_name
-                (identifier)
-                (identifier))))
-            (identifier))
-        (type
-            (list_type
-            (ERROR
-                (type
-                (literal_type
-                    (string
-                    (string_start)
-                    (string_content)
-                    (string_end)))))
-            (type
-                (literal_type
-                (string
-                    (string_start)
-                    (string_content)
-                    (string_end)))))))
-        (block))))
+                  (string_start)
+                  (string_content)
+                  (string_end))))))))

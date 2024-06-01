@@ -144,23 +144,21 @@ schema x[argc: int]:
 --------------------------------------------------------------------------------
 
 (module
-    (ERROR
-    (ERROR
-        (identifier))
-    (identifier)
-    (dotted_name
-        (identifier))
-    (ERROR
-        (type
-        (schema_type
+      (schema_statement
+        (ERROR
+          (identifier))
+        (identifier)
+        (block
+          (assignment
             (dotted_name
-            (identifier)))))
-    (type
-        (union_type
-        (type
-            (basic_type))
-        (type
-            (basic_type))))))
+              (identifier))
+            (ERROR
+              (identifier))
+            (union_type
+              (type
+                (basic_type))
+              (type
+                (basic_type)))))))
 
 ================================================================================
 Any Type

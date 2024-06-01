@@ -268,7 +268,7 @@ module.exports = grammar({
       $.decorated_definition,
     ),
 
-    if_statement: $ => seq(
+    if_statement: $ => choice(seq(
       'if',
       field('condition', $.expression),
       ':',
@@ -276,6 +276,16 @@ module.exports = grammar({
       repeat(field('alternative', $.elif_clause)),
       optional(field('alternative', $.else_clause)),
     ),
+      seq(
+        field('condition',$.expression),
+        ',',
+        field('error_message', $.string),
+    ),
+      seq(
+        field('expr1',$.expression),
+        'if',
+        field('condition',$.expression),
+      )),
 
     elif_clause: $ => seq(
       'elif',
@@ -298,7 +308,7 @@ module.exports = grammar({
 
     lambda_expr: $ => prec(PREC.call, seq(
       'lambda',
-      field('parameters', $.parameters),
+      field('parameters', $._parameters),
       optional(
         seq(
           '->',
@@ -310,19 +320,22 @@ module.exports = grammar({
       '}',
     )),
 
-    quant_expr: $ => seq(
+    quant_expr: $ => prec.left(seq(
       field('quant_op', $.quant_op),
-      field('identifier', $.identifier),
-      ',',
+      optional(seq(
+        field('identifier', $.identifier),
+        ',',
+      )),
       field('identifier', $.identifier),
       'in',
       field('quant_target', $.quant_target),
       '{',
       field('expr1', $.expression),
-      '}'
-    ),
+      '}',
+    )),
 
     quant_target: $ => choice(
+      field('dictionary_or_list', $.identifier),
       $.dictionary,
       seq(
         '[',
@@ -365,12 +378,12 @@ module.exports = grammar({
       $.type,
     )),
 
-    schema_statement: $ => seq(
+    schema_statement: $ => prec.left(seq(
       'schema',
       field('name', $.identifier),
       ':',
       field('body', $._suite),
-    ),
+    )),
 
     mixin_statement: $ => seq(
       'mixin',
@@ -398,13 +411,13 @@ module.exports = grammar({
     check_statement: $ => prec.left(seq(
       'check',
       ':',
-      repeat1(
-        seq(
-          field('quant_expr', $.quant_expr),
-          ',',
-          field('error_message', $.string)
-        )
-      )
+      repeat1(seq(
+          field('expr1', $.quant_expr),
+          optional(seq(
+            ',',
+            field('error_message', $.string),
+          )),
+      ),)
     )), 
 
     argument_list: $ => seq(
@@ -597,7 +610,7 @@ module.exports = grammar({
     )),
 
     comparison_operator: $ => prec.left(2, seq(
-      $.primary_expression,
+      choice($.primary_expression,$.identifier,$.dotted_name),
       repeat1(seq(
         field('operators',
           choice(
@@ -621,6 +634,7 @@ module.exports = grammar({
       choice(
         seq('=', field('right', choice($.dotted_name,$.expression,))),
         seq(':', field('type', $.type), '=', field('right', $.expression)),
+        alias(seq(':',field('type', $.type)),'null_assignment'),
       ),
     ),
 
@@ -710,9 +724,8 @@ module.exports = grammar({
     )),
     basic_type: _ => choice('str', 'int', 'float', 'bool', 'any'),
     list_type: $ => prec.left(seq('[', $.type, ']')),
-    dict_type: $ => prec.left(seq('{', optional($.type), ':', $.type, '}')),
+    dict_type: $ => prec.left(seq('{', optional($.type), ':', optional($.type), '}')),
     literal_type: $ => choice($.string, $.float, $.integer, $.true, $.false),
-
     // Arguments
 
     keyword_argument: $ => seq(
