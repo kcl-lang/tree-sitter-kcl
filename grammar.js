@@ -881,7 +881,7 @@ module.exports = grammar({
       ));
     },
 
-    identifier: _ => /\$?[_\p{XID_Start}][_\p{XID_Continue}]*/,
+    identifier: _ => /[_$a-zA-Z][_$\p{XID_Continue}]*/,
 
     true: _ => 'True',
     false: _ => 'False',
