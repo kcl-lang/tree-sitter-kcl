@@ -1293,7 +1293,7 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "type",
@@ -1735,7 +1735,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "parameter",
             "named": true
           }
         ]
@@ -1955,7 +1955,7 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
