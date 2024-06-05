@@ -380,7 +380,7 @@ module.exports = grammar({
 
     schema_statement: $ => prec.left(seq(
       'schema',
-      field('name', $.identifier),
+      field('name', $.parameter),
       ':',
       field('body', $._suite),
     )),
@@ -705,11 +705,20 @@ module.exports = grammar({
       field('arguments', $.argument_list),
     )),
 
-    typed_parameter: $ => prec(PREC.typed_parameter, seq(
+    typed_parameter: $ => prec(PREC.typed_parameter, choice(seq(
       $.identifier,
       ':',
       field('type', $.type),
-    )),
+    ),
+    // for schema argument type annotation
+    prec.left(seq(
+      $.identifier,
+      '[',
+      $.identifier,
+      ':',
+      field('type',$.type),
+      ']',
+    )))),
 
     // Types
 
@@ -723,12 +732,12 @@ module.exports = grammar({
       $.literal_type,
     ),
     schema_type: $ => $.dotted_name,
-    union_type: $ => prec.left(seq($.type, '|', $.type)),
+    union_type: $ => prec.left(seq($.type, repeat1(prec.left(seq('|', $.type))))),
     function_type: $ => prec.left(seq(
       '(', optional(commaSep1($.type)), ')', optional(seq('->', $.type))
     )),
     basic_type: _ => choice('str', 'int', 'float', 'bool', 'any'),
-    list_type: $ => prec.left(seq('[', $.type, ']')),
+    list_type: $ => prec.left(seq('[', optional($.type), ']')),
     dict_type: $ => prec.left(seq('{', optional($.type), ':', optional($.type), '}')),
     literal_type: $ => choice($.string, $.float, $.integer, $.true, $.false),
     // Arguments
@@ -872,7 +881,7 @@ module.exports = grammar({
       ));
     },
 
-    identifier: _ => /[_\p{XID_Start}][_\p{XID_Continue}]*/,
+    identifier: _ => /\$?[_\p{XID_Start}][_\p{XID_Continue}]*/,
 
     true: _ => 'True',
     false: _ => 'False',

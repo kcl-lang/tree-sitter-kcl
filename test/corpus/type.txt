@@ -140,21 +140,29 @@ c: Person = Person {}
 Union Type
 ================================================================================
 
-schema x:
-    a: int | str
+schema x[argc: int]: 
+    p: int | str | float
 
 --------------------------------------------------------------------------------
 
 (module
       (schema_statement
-        (identifier)
+        (typed_parameter
+          (identifier)
+          (identifier)
+          (type
+            (basic_type)))
         (block
           (assignment
             (dotted_name
               (identifier))
             (union_type
               (type
-                (basic_type))
+                (union_type
+                  (type
+                    (basic_type))
+                  (type
+                    (basic_type))))
               (type
                 (basic_type)))))))
 
