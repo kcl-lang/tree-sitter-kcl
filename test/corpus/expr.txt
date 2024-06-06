@@ -771,3 +771,49 @@ d = filter _, v in {a = "foo", b = "bar"} {v == "foo"}
               (string_start)
               (string_content)
               (string_end))))))
+
+================================================================================
+quantifier Any expression
+================================================================================
+
+schema Config:
+    volumes: [{str:}]
+
+    check:
+        any volume in volumes {
+            volume.mountPath in ["/home/admin", "/home/myapp"]
+        }
+
+--------------------------------------------------------------------------------
+
+(module
+  (schema_statement
+    (identifier)
+    (block
+      (assignment
+        (dotted_name
+          (identifier))
+        (list_type
+          (type
+            (dict_type
+              (type
+                (basic_type))))))
+      (check_statement
+        (quant_expr
+          (quant_op)
+          (identifier)
+          (quant_target
+            (identifier))
+          (comparison_operator
+            (dotted_name
+              (identifier)
+              (identifier))
+            (list
+              (string
+                (string_start)
+                (string_content)
+                (string_end))
+              (string
+                (string_start)
+                (string_content)
+                (string_end)))))))))

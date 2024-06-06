@@ -330,13 +330,28 @@ module.exports = grammar({
       'in',
       field('quant_target', $.quant_target),
       '{',
-      field('expr1', $.expression),
+      choice(
+        field('expr1', $.expression),
+        seq(
+          field('dotted_name', $.dotted_name),
+          field('string', $.string)
+        )
+      ),
+      optional(seq(
+        'if',
+        field('expr2', $.expression)
+      )),
       '}',
     )),
 
-    quant_target: $ => choice(
+    quant_target: $ => prec(1, choice(
       field('dictionary_or_list', $.identifier),
       $.dictionary,
+      $.string,
+      $.list,
+      $.list_comprehension,
+      $.config_expr,
+      $.dictionary_comprehension,
       seq(
         '[',
         field('integer', $.integer),
@@ -346,7 +361,7 @@ module.exports = grammar({
         )),
         ']'
       )
-    ),
+    )),
     
     quant_op: $ => choice(
       'all',
@@ -460,7 +475,7 @@ module.exports = grammar({
       $._dedent,
     ),
 
-    dotted_name: $ => prec.left(1, sep1($.identifier, choice('?.','.',))),
+    dotted_name: $ => prec.left(2, sep1($.identifier, choice('?.','.',))),
 
     // Patterns
 
@@ -507,7 +522,7 @@ module.exports = grammar({
       field('alias', $.expression),
     )),
 
-    primary_expression: $ => choice(
+    primary_expression: $ => prec(2, choice(
       $.binary_operator,
       $.identifier,
       $.string,
@@ -535,7 +550,7 @@ module.exports = grammar({
       $.null_coalesce,
       $.string_literal_expr,
       $.config_expr,
-    ),
+    )),
 
     paren_expression: $ => seq(
       '(', $.expression, ')'
@@ -569,15 +584,69 @@ module.exports = grammar({
       '"'
     ),
 
-    config_expr: $ => prec(1, seq(
+    config_expr: $ => seq(
       '{',
-      sep1(',', seq(
-        field('key', $.identifier),
-        '=',
-        field('value', $.expression)
+      optional(choice(
+        $.config_entries,
+        seq(
+          '\n',
+          optional($.config_entries)
+        )
       )),
       '}'
+    ),
+    
+    config_entries: $ => seq(
+      $.config_entry,
+      repeat(seq(
+        choice(
+          ',',
+          seq(
+            optional(','),
+            '\n'
+          )
+        ),
+        $.config_entry
+      )),
+      optional(','),
+      optional('\n')
+    ),
+    
+    config_entry: $ => choice(
+      seq(
+        $.test,
+        choice(':', '=', '+='),
+        $.test
+      ),
+      $.dictionary_splat,
+      $.if_entry
+    ),
+
+    test: $ => prec(1, choice(
+      $.dotted_name,
+      $.identifier,
+      $.string,
+      $.integer,
+      $.float,
+      $.paren_expression
     )),
+    
+    dotted_identifier: $ => prec(4, seq(
+      $.identifier,
+      repeat(seq('.', $.identifier))
+    )),
+    
+    double_star_expr: $ => seq(
+      '**',
+      $.expression
+    ),
+    
+    if_entry: $ => seq(
+      'if',
+      $.expression,
+      'then',
+      $.expression
+    ),
     
     binary_operator: $ => {
       const table = [
