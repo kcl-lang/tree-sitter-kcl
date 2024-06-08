@@ -158,3 +158,27 @@ schema ObsoleteSchema:
           (dotted_name
             (identifier))
           (basic_type))))))
+
+================================================================================
+Unification Statement
+================================================================================
+
+personInstance : Person {name: "Alice"}
+
+--------------------------------------------------------------------------------
+
+(module
+  (unification
+    (dotted_name
+      (identifier))
+    (schema_expr
+      (dotted_name
+        (identifier))
+      (dictionary
+        (pair
+          (attribute
+            (identifier))
+          (string
+            (string_start)
+            (string_content)
+            (string_end)))))))

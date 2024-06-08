@@ -717,7 +717,7 @@ module.exports = grammar({
     ),
 
     unification: $ => seq(
-      field('left', $.identifier),
+      field('left', $.dotted_name),
       ':',
       field('right', $.schema_expr),
     ),
@@ -884,6 +884,25 @@ module.exports = grammar({
       'else',
       $.expression,
     )),
+
+    raw_string: $ => prec(64, seq(
+      $.raw_string_start,
+      repeat($.string_content),
+      $.string_end,
+    )),
+    
+    raw_string_content: $ => prec.right(repeat1(
+      choice(
+        $._not_escape_sequence,
+        $._raw_string_content,
+      ))),
+
+      raw_string_start: $ => token(seq(
+        choice('r', 'R'),
+        '"'
+      )),
+      
+      _raw_string_content: $ => /[^"]/, // matches any character except "
 
     string: $ => seq(
       $.string_start,

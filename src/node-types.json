@@ -2154,17 +2154,17 @@
     "type": "unification",
     "named": true,
     "fields": {
-      "identifier": {
+      "left": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "dotted_name",
             "named": true
           }
         ]
       },
-      "schema_expr": {
+      "right": {
         "multiple": false,
         "required": true,
         "types": [
@@ -2554,6 +2554,10 @@
   {
     "type": "protocol",
     "named": false
+  },
+  {
+    "type": "raw_string_start",
+    "named": true
   },
   {
     "type": "rule",
