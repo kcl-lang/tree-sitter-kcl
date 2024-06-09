@@ -330,13 +330,28 @@ module.exports = grammar({
       'in',
       field('quant_target', $.quant_target),
       '{',
-      field('expr1', $.expression),
+      choice(
+        field('expr1', $.expression),
+        seq(
+          field('dotted_name', $.dotted_name),
+          field('string', $.string)
+        )
+      ),
+      optional(seq(
+        'if',
+        field('expr2', $.expression)
+      )),
       '}',
     )),
 
-    quant_target: $ => choice(
+    quant_target: $ => prec(1, choice(
       field('dictionary_or_list', $.identifier),
       $.dictionary,
+      $.string,
+      $.list,
+      $.list_comprehension,
+      $.config_expr,
+      $.dictionary_comprehension,
       seq(
         '[',
         field('integer', $.integer),
@@ -346,7 +361,7 @@ module.exports = grammar({
         )),
         ']'
       )
-    ),
+    )),
     
     quant_op: $ => choice(
       'all',
@@ -460,7 +475,7 @@ module.exports = grammar({
       $._dedent,
     ),
 
-    dotted_name: $ => prec(1, sep1($.identifier, choice('?.','.',))),
+    dotted_name: $ => prec.left(2, sep1($.identifier, choice('?.','.',))),
 
     // Patterns
 
@@ -507,7 +522,7 @@ module.exports = grammar({
       field('alias', $.expression),
     )),
 
-    primary_expression: $ => choice(
+    primary_expression: $ => prec(2, choice(
       $.binary_operator,
       $.identifier,
       $.string,
@@ -535,7 +550,7 @@ module.exports = grammar({
       $.null_coalesce,
       $.string_literal_expr,
       $.config_expr,
-    ),
+    )),
 
     paren_expression: $ => seq(
       '(', $.expression, ')'
@@ -569,15 +584,69 @@ module.exports = grammar({
       '"'
     ),
 
-    config_expr: $ => prec(1, seq(
+    config_expr: $ => seq(
       '{',
-      sep1(',', seq(
-        field('key', $.identifier),
-        '=',
-        field('value', $.expression)
+      optional(choice(
+        $.config_entries,
+        seq(
+          '\n',
+          optional($.config_entries)
+        )
       )),
       '}'
+    ),
+    
+    config_entries: $ => seq(
+      $.config_entry,
+      repeat(seq(
+        choice(
+          ',',
+          seq(
+            optional(','),
+            '\n'
+          )
+        ),
+        $.config_entry
+      )),
+      optional(','),
+      optional('\n')
+    ),
+    
+    config_entry: $ => choice(
+      seq(
+        $.test,
+        choice(':', '=', '+='),
+        $.test
+      ),
+      $.dictionary_splat,
+      $.if_entry
+    ),
+
+    test: $ => prec(1, choice(
+      $.dotted_name,
+      $.identifier,
+      $.string,
+      $.integer,
+      $.float,
+      $.paren_expression
     )),
+    
+    dotted_identifier: $ => prec(4, seq(
+      $.identifier,
+      repeat(seq('.', $.identifier))
+    )),
+    
+    double_star_expr: $ => seq(
+      '**',
+      $.expression
+    ),
+    
+    if_entry: $ => seq(
+      'if',
+      $.expression,
+      'then',
+      $.expression
+    ),
     
     binary_operator: $ => {
       const table = [
@@ -648,17 +717,22 @@ module.exports = grammar({
     ),
 
     unification: $ => seq(
-      field('left', $.identifier),
+      field('left', $.dotted_name),
       ':',
       field('right', $.schema_expr),
     ),
 
-    attribute: $ => prec(PREC.call, seq(
-      field('object', $.primary_expression),
-      '.',
-      field('attribute', $.identifier),
+    attribute: $ => prec.right(11, seq(
+      field('name', $.identifier),
+      optional(seq(
+        field('is_mutable', $.isMutableFlag),
+        field('type', choice($.type, $.union_type)),
+        optional(seq('=', field('value', $.expression)))
+      ))
     )),
-
+    
+    isMutableFlag: $ => '_',
+    
     optional_attribute: $ => prec(PREC.call, seq(
       field('object', $.primary_expression),
       '?.',
@@ -811,6 +885,25 @@ module.exports = grammar({
       $.expression,
     )),
 
+    raw_string: $ => prec(64, seq(
+      $.raw_string_start,
+      repeat($.string_content),
+      $.string_end,
+    )),
+    
+    raw_string_content: $ => prec.right(repeat1(
+      choice(
+        $._not_escape_sequence,
+        $._raw_string_content,
+      ))),
+
+      raw_string_start: $ => token(seq(
+        choice('r', 'R'),
+        '"'
+      )),
+      
+      _raw_string_content: $ => /[^"]/, // matches any character except "
+
     string: $ => seq(
       $.string_start,
       repeat($.string_content),
@@ -824,6 +917,8 @@ module.exports = grammar({
         $._not_escape_sequence,
         $._string_content,
       ))),
+
+    escape_interpolation: _ => token.immediate(/\$\{[^}]*\}/),
 
     escape_sequence: _ => token.immediate(prec(1, seq(
       '\\',
@@ -839,6 +934,8 @@ module.exports = grammar({
     ))),
 
     _not_escape_sequence: _ => token.immediate('\\'),
+
+    _string_content: _ => token.immediate(/[^\\{}]+/),
 
     integer: $ => token(choice(
       seq(
@@ -872,7 +969,7 @@ module.exports = grammar({
       ));
     },
 
-    identifier: _ => /\$?[_\p{XID_Start}][_\p{XID_Continue}]*/,
+    identifier: _ => /[_$a-zA-Z][_$\p{XID_Continue}]*/,
 
     true: _ => 'True',
     false: _ => 'False',

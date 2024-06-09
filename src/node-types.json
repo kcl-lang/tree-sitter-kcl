@@ -367,7 +367,17 @@
     "type": "attribute",
     "named": true,
     "fields": {
-      "attribute": {
+      "is_mutable": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "isMutableFlag",
+            "named": true
+          }
+        ]
+      },
+      "name": {
         "multiple": false,
         "required": true,
         "types": [
@@ -377,12 +387,26 @@
           }
         ]
       },
-      "object": {
+      "type": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
-            "type": "primary_expression",
+            "type": "type",
+            "named": true
+          },
+          {
+            "type": "union_type",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
             "named": true
           }
         ]
@@ -762,29 +786,56 @@
     }
   },
   {
+    "type": "config_entries",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "config_entry",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "config_entry",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "dictionary_splat",
+          "named": true
+        },
+        {
+          "type": "if_entry",
+          "named": true
+        },
+        {
+          "type": "test",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "config_expr",
     "named": true,
-    "fields": {
-      "key": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "value": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "expression",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "config_entries",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1053,6 +1104,21 @@
     "fields": {},
     "children": {
       "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "if_entry",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
       "required": true,
       "types": [
         {
@@ -1581,9 +1647,29 @@
     "type": "quant_expr",
     "named": true,
     "fields": {
+      "dotted_name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "dotted_name",
+            "named": true
+          }
+        ]
+      },
       "expr1": {
         "multiple": false,
-        "required": true,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "expr2": {
+        "multiple": false,
+        "required": false,
         "types": [
           {
             "type": "expression",
@@ -1617,6 +1703,16 @@
         "types": [
           {
             "type": "quant_target",
+            "named": true
+          }
+        ]
+      },
+      "string": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
             "named": true
           }
         ]
@@ -1658,7 +1754,27 @@
       "required": false,
       "types": [
         {
+          "type": "config_expr",
+          "named": true
+        },
+        {
           "type": "dictionary",
+          "named": true
+        },
+        {
+          "type": "dictionary_comprehension",
+          "named": true
+        },
+        {
+          "type": "list",
+          "named": true
+        },
+        {
+          "type": "list_comprehension",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         }
       ]
@@ -1850,6 +1966,41 @@
     }
   },
   {
+    "type": "test",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "dotted_name",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "paren_expression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "type",
     "named": true,
     "fields": {},
@@ -2008,7 +2159,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "dotted_name",
             "named": true
           }
         ]
@@ -2039,6 +2190,10 @@
         }
       ]
     }
+  },
+  {
+    "type": "\n",
+    "named": false
   },
   {
     "type": "!=",
@@ -2302,11 +2457,11 @@
   },
   {
     "type": "float",
-    "named": false
+    "named": true
   },
   {
     "type": "float",
-    "named": true
+    "named": false
   },
   {
     "type": "for",
@@ -2343,6 +2498,10 @@
   {
     "type": "is not",
     "named": false
+  },
+  {
+    "type": "isMutableFlag",
+    "named": true
   },
   {
     "type": "k",
@@ -2397,6 +2556,10 @@
     "named": false
   },
   {
+    "type": "raw_string_start",
+    "named": true
+  },
+  {
     "type": "rule",
     "named": false
   },
@@ -2415,6 +2578,10 @@
   {
     "type": "string_start",
     "named": true
+  },
+  {
+    "type": "then",
+    "named": false
   },
   {
     "type": "true",
