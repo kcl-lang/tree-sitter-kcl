@@ -992,13 +992,9 @@ module.exports = grammar({
     undefined: _ => 'Undefined',
     multiplier: _ => choice('n', 'u', 'm', 'k', 'K', 'M', 'G', 'T', 'P', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'),
 
-    comment: _ => token(choice(
-      seq('#', ' ', /.*/),  // Block comment
-      seq('  ', '#', ' ', /.*/)  // Inline comment
-    )),
+    comment: _ => token(seq('#', /.*/)),
 
     line_continuation: _ => token(seq('\\', choice(seq(optional('\r'), '\n'), '\0'))),
-
   },
 });
 
