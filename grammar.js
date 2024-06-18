@@ -514,6 +514,7 @@ module.exports = grammar({
       $.primary_expression,
       $.as_expression,
       $.conditional_expression,
+      $.long_expression,
     )),
 
     as_expression: $ => prec.left(seq(
@@ -577,6 +578,20 @@ module.exports = grammar({
         field('right', $.expression),
       )),
     ),
+
+    long_expression: $ => prec(17, seq(
+      $.expression,
+      '+',
+      $.line_continuation,
+      repeat(seq(
+        optional(' '.repeat(4)),
+        $.expression,
+        '+',
+        $.line_continuation
+      )),
+      optional(' '.repeat(4)),
+      $.expression
+    )),
 
     string_literal_expr: $ => seq(
       '"',
@@ -977,9 +992,13 @@ module.exports = grammar({
     undefined: _ => 'Undefined',
     multiplier: _ => choice('n', 'u', 'm', 'k', 'K', 'M', 'G', 'T', 'P', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'),
 
-    comment: _ => token(seq('#', /.*/)),
+    comment: _ => token(choice(
+      seq('#', ' ', /.*/),  // Block comment
+      seq('  ', '#', ' ', /.*/)  // Inline comment
+    )),
 
     line_continuation: _ => token(seq('\\', choice(seq(optional('\r'), '\n'), '\0'))),
+
   },
 });
 

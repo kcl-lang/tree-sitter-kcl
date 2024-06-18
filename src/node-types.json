@@ -88,6 +88,10 @@
         "named": true
       },
       {
+        "type": "long_expression",
+        "named": true
+      },
+      {
         "type": "not_operator",
         "named": true
       },
@@ -1400,6 +1404,25 @@
     }
   },
   {
+    "type": "long_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "line_continuation",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "mixin_statement",
     "named": true,
     "fields": {
@@ -2196,6 +2219,10 @@
     "named": false
   },
   {
+    "type": "    ",
+    "named": false
+  },
+  {
     "type": "!=",
     "named": false
   },
@@ -2457,11 +2484,11 @@
   },
   {
     "type": "float",
-    "named": true
+    "named": false
   },
   {
     "type": "float",
-    "named": false
+    "named": true
   },
   {
     "type": "for",
