@@ -259,6 +259,7 @@ module.exports = grammar({
 
     _compound_statement: $ => choice(
       $.if_statement,
+      $.schema_index_signature,
       // TODO: schema and rule statement grammars
       $.schema_statement,
       $.rule_statement,
@@ -305,6 +306,24 @@ module.exports = grammar({
       // field('schema_arguments', $.argument_list),
       $.dictionary,
     )),
+
+    schema_index_signature: $ => seq(
+      '[',
+      optional(seq(
+        field('attr_alias', $.identifier),
+        ':'
+      )),
+      optional('...'),
+      field('key_type', $.basic_type),
+      ']',
+      ':',
+      field('value_type', $.type),
+      optional(seq(
+        '=',
+        field('default', $.test)
+      )),
+      $._newline
+    ),
 
     lambda_expr: $ => prec(PREC.call, seq(
       'lambda',
@@ -450,6 +469,7 @@ module.exports = grammar({
     decorated_definition: $ => seq(
       repeat1($.decorator),
       field('definition', choice(
+        $.schema_index_signature,
         $.schema_statement,
         $.mixin_statement,
         $.rule_statement,

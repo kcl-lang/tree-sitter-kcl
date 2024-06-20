@@ -28,6 +28,10 @@
         "named": true
       },
       {
+        "type": "schema_index_signature",
+        "named": true
+      },
+      {
         "type": "schema_statement",
         "named": true
       }
@@ -864,6 +868,10 @@
           },
           {
             "type": "rule_statement",
+            "named": true
+          },
+          {
+            "type": "schema_index_signature",
             "named": true
           },
           {
@@ -1856,6 +1864,52 @@
     }
   },
   {
+    "type": "schema_index_signature",
+    "named": true,
+    "fields": {
+      "attr_alias": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "default": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "test",
+            "named": true
+          }
+        ]
+      },
+      "key_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "basic_type",
+            "named": true
+          }
+        ]
+      },
+      "value_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "schema_statement",
     "named": true,
     "fields": {
@@ -2296,6 +2350,10 @@
   },
   {
     "type": ".",
+    "named": false
+  },
+  {
+    "type": "...",
     "named": false
   },
   {

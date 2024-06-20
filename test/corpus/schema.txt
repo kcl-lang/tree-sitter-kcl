@@ -182,3 +182,29 @@ personInstance : Person {name: "Alice"}
             (string_start)
             (string_content)
             (string_end)))))))
+
+================================================================================
+Index Signature
+================================================================================
+
+schema Map:
+    """
+    Map is a schema with a key of str type and a value of str type
+    """
+    [str]: str  # `{attr_alias}` can be omitted.
+
+--------------------------------------------------------------------------------
+
+(module
+  (schema_statement
+    (identifier)
+    (block
+      (string
+        (string_start)
+        (string_content)
+        (string_end))
+      (schema_index_signature
+        (basic_type)
+        (type
+          (basic_type))
+        (comment)))))
