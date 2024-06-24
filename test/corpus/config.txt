@@ -70,9 +70,8 @@ data = Data {
     (dotted_name
         (identifier))
     (schema_expr
-        (dotted_name
-        (identifier))
-        (dictionary
+        (identifier)
+        (dict_expr
         (pair
             (attribute
             (identifier))

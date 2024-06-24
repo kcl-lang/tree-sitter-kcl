@@ -705,7 +705,7 @@
         "required": true,
         "types": [
           {
-            "type": "quant_expr",
+            "type": "expression",
             "named": true
           }
         ]
@@ -931,6 +931,25 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "dict_expr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "dictionary_splat",
+          "named": true
+        },
+        {
+          "type": "pair",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1841,23 +1860,27 @@
     "type": "schema_expr",
     "named": true,
     "fields": {
-      "name": {
+      "operand_name": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "dotted_name",
+            "type": "identifier",
             "named": true
           }
         ]
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "dictionary",
+          "type": "argument_list",
+          "named": true
+        },
+        {
+          "type": "dict_expr",
           "named": true
         }
       ]
