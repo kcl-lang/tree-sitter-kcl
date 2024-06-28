@@ -172,9 +172,93 @@ personInstance : Person {name: "Alice"}
     (dotted_name
       (identifier))
     (schema_expr
-      (dotted_name
-        (identifier))
-      (dictionary
+      (identifier)
+      (dict_expr
+        (pair
+          (attribute
+            (identifier))
+          (string
+            (string_start)
+            (string_content)
+            (string_end)))))))
+
+================================================================================
+Schema Index Signature
+================================================================================
+
+schema Map:
+    """
+    Map is a schema with a key of str type and a value of str type
+    """
+    [str]: str  # `{attr_alias}` can be omitted.
+
+--------------------------------------------------------------------------------
+
+(module
+  (schema_statement
+    (identifier)
+    (block
+      (string
+        (string_start)
+        (string_content)
+        (string_end))
+      (schema_index_signature
+        (basic_type)
+        (type
+          (basic_type))
+        (comment)))))
+
+================================================================================
+Schema Index Signature with Check Block
+================================================================================
+
+schema Data:
+    [data: str]: str
+    check:
+        data in ["Alice", "Bob"]
+
+data = Data {
+    Alice = "10"
+    Bob = "12"
+}
+
+--------------------------------------------------------------------------------
+
+(module
+  (schema_statement
+    (identifier)
+    (block
+      (schema_index_signature
+        (identifier)
+        (basic_type)
+        (type
+          (basic_type)))
+      (check_statement
+        (comparison_operator
+          (attribute
+            (identifier))
+          (list
+            (string
+              (string_start)
+              (string_content)
+              (string_end))
+            (string
+              (string_start)
+              (string_content)
+              (string_end)))))))
+  (assignment
+    (dotted_name
+      (identifier))
+    (schema_expr
+      (identifier)
+      (dict_expr
+        (pair
+          (attribute
+            (identifier))
+          (string
+            (string_start)
+            (string_content)
+            (string_end)))
         (pair
           (attribute
             (identifier))

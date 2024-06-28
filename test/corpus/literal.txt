@@ -39,6 +39,37 @@ r"Hi\nHello"
     (string_end)))
 
 ================================================================================
+Documented String
+================================================================================
+
+schema Person:
+    """
+    Person schema doc string
+    """
+
+    name: str = "Alice"
+
+--------------------------------------------------------------------------------
+
+(module
+  (schema_statement
+    (identifier)
+    (block
+      (string
+        (string_start)
+        (string_content)
+        (string_end))
+      (assignment
+        (dotted_name
+          (identifier))
+        (type
+          (basic_type))
+        (string
+          (string_start)
+          (string_content)
+          (string_end))))))
+
+================================================================================
 number
 ================================================================================
 

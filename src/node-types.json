@@ -28,6 +28,10 @@
         "named": true
       },
       {
+        "type": "schema_index_signature",
+        "named": true
+      },
+      {
         "type": "schema_statement",
         "named": true
       }
@@ -85,6 +89,10 @@
       },
       {
         "type": "conditional_expression",
+        "named": true
+      },
+      {
+        "type": "long_expression",
         "named": true
       },
       {
@@ -697,7 +705,7 @@
         "required": true,
         "types": [
           {
-            "type": "quant_expr",
+            "type": "expression",
             "named": true
           }
         ]
@@ -863,6 +871,10 @@
             "named": true
           },
           {
+            "type": "schema_index_signature",
+            "named": true
+          },
+          {
             "type": "schema_statement",
             "named": true
           }
@@ -919,6 +931,25 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "dict_expr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "dictionary_splat",
+          "named": true
+        },
+        {
+          "type": "pair",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1400,6 +1431,25 @@
     }
   },
   {
+    "type": "long_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "line_continuation",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "mixin_statement",
     "named": true,
     "fields": {
@@ -1810,26 +1860,76 @@
     "type": "schema_expr",
     "named": true,
     "fields": {
-      "name": {
+      "operand_name": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "dotted_name",
+            "type": "identifier",
             "named": true
           }
         ]
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "dictionary",
+          "type": "argument_list",
+          "named": true
+        },
+        {
+          "type": "dict_expr",
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "schema_index_signature",
+    "named": true,
+    "fields": {
+      "attr_alias": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "default": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "test",
+            "named": true
+          }
+        ]
+      },
+      "key_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "basic_type",
+            "named": true
+          }
+        ]
+      },
+      "value_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -2196,6 +2296,10 @@
     "named": false
   },
   {
+    "type": "    ",
+    "named": false
+  },
+  {
     "type": "!=",
     "named": false
   },
@@ -2269,6 +2373,10 @@
   },
   {
     "type": ".",
+    "named": false
+  },
+  {
+    "type": "...",
     "named": false
   },
   {
@@ -2457,11 +2565,11 @@
   },
   {
     "type": "float",
-    "named": true
+    "named": false
   },
   {
     "type": "float",
-    "named": false
+    "named": true
   },
   {
     "type": "for",

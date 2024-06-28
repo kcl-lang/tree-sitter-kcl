@@ -28,6 +28,22 @@ unary expression
     (integer)))
 
 ================================================================================
+Index expression
+================================================================================
+
+"abc"[1]
+
+--------------------------------------------------------------------------------
+
+(module
+  (subscript
+    (string
+      (string_start)
+      (string_content)
+      (string_end))
+    (integer)))
+
+================================================================================
 slice expression
 ================================================================================
 
@@ -198,9 +214,8 @@ name1 = person.name
         (dotted_name
           (identifier))
         (schema_expr
-          (dotted_name
-            (identifier))
-          (dictionary
+          (identifier)
+          (dict_expr
             (pair
               (attribute
                 (identifier))
@@ -239,9 +254,8 @@ name2 = person?.name
         (dotted_name
           (identifier))
         (schema_expr
-          (dotted_name
-            (identifier))
-          (dictionary
+          (identifier)
+          (dict_expr
             (pair
               (attribute
                 (identifier))

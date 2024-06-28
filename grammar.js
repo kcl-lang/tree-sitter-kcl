@@ -259,6 +259,7 @@ module.exports = grammar({
 
     _compound_statement: $ => choice(
       $.if_statement,
+      $.schema_index_signature,
       // TODO: schema and rule statement grammars
       $.schema_statement,
       $.rule_statement,
@@ -300,11 +301,33 @@ module.exports = grammar({
       field('body', $._suite),
     ),
 
-    schema_expr: $ => prec(PREC.call, seq(
-      field('name', $.dotted_name),
-      // field('schema_arguments', $.argument_list),
-      $.dictionary,
-    )),
+    schema_expr: $ => seq(
+      field('operand_name', $.identifier),
+      optional(seq(
+        '(',
+        optional($.argument_list),
+        ')'
+      )),
+      $.dict_expr,
+    ),
+
+    schema_index_signature: $ => seq(
+      '[',
+      optional(seq(
+        field('attr_alias', $.identifier),
+        ':'
+      )),
+      optional('...'),
+      field('key_type', $.basic_type),
+      ']',
+      ':',
+      field('value_type', $.type),
+      optional(seq(
+        '=',
+        field('default', $.test)
+      )),
+      $._newline
+    ),
 
     lambda_expr: $ => prec(PREC.call, seq(
       'lambda',
@@ -427,13 +450,13 @@ module.exports = grammar({
       'check',
       ':',
       repeat1(seq(
-          field('expr1', $.quant_expr),
+          field('expr1', $.expression),
           optional(seq(
             ',',
             field('error_message', $.string),
           )),
       ),)
-    )), 
+    )),
 
     argument_list: $ => seq(
       '(',
@@ -450,6 +473,7 @@ module.exports = grammar({
     decorated_definition: $ => seq(
       repeat1($.decorator),
       field('definition', choice(
+        $.schema_index_signature,
         $.schema_statement,
         $.mixin_statement,
         $.rule_statement,
@@ -514,6 +538,7 @@ module.exports = grammar({
       $.primary_expression,
       $.as_expression,
       $.conditional_expression,
+      $.long_expression,
     )),
 
     as_expression: $ => prec.left(seq(
@@ -577,6 +602,20 @@ module.exports = grammar({
         field('right', $.expression),
       )),
     ),
+
+    long_expression: $ => prec(17, seq(
+      $.expression,
+      '+',
+      $.line_continuation,
+      repeat(seq(
+        optional(' '.repeat(4)),
+        $.expression,
+        '+',
+        $.line_continuation
+      )),
+      optional(' '.repeat(4)),
+      $.expression
+    )),
 
     string_literal_expr: $ => seq(
       '"',
@@ -831,6 +870,15 @@ module.exports = grammar({
       optional(','),
       '}'
     )),
+
+    dict_expr: $ => seq(
+      '{',
+      repeat(seq(
+        choice($.pair, $.dictionary_splat),
+        optional(',')
+      )),
+      '}',
+    ),
 
     pair: $ => seq(
       field('key', $.expression),
