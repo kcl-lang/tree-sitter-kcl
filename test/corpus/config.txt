@@ -107,3 +107,47 @@ config = {
             (select_suffix
               (identifier)))
           (identifier))))))
+
+================================================================================
+Config Shorthand Entries
+================================================================================
+
+m = { name, age }
+
+--------------------------------------------------------------------------------
+
+(module
+  (assign_stmt
+    (dotted_name
+      (identifier))
+    (config_expr
+      (config_entries
+        (config_entry
+          (config_shorthand
+            (identifier)))
+        (config_entry
+          (config_shorthand
+            (identifier)))))))
+
+================================================================================
+Mixed Shorthand and Regular Entries
+================================================================================
+
+n = Person { name, age = 99 }
+
+--------------------------------------------------------------------------------
+
+(module
+  (assign_stmt
+    (dotted_name
+      (identifier))
+    (schema_expr
+      (identifier)
+      (config_expr
+        (config_entries
+          (config_entry
+            (config_shorthand
+              (identifier)))
+          (config_entry
+            (identifier)
+            (integer)))))))

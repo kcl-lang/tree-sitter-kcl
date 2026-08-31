@@ -699,8 +699,15 @@ module.exports = grammar({
         $._expr
       ),
       $.config_splat,
-      $.if_entry
+      $.if_entry,
+      $.config_shorthand
     ),
+
+    // ES6-style shorthand: a bare identifier entry stands for `key = key`
+    // (https://github.com/kcl-lang/kcl/issues/1275). Only single-segment
+    // identifiers are allowed; dotted keys like `{a.b}` remain a parse
+    // error so key-flattening keeps its current semantics.
+    config_shorthand: $ => field('name', $.identifier),
 
     dotted_identifier: $ => prec(4, seq(
       $.identifier,
