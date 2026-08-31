@@ -2298,8 +2298,20 @@
         {
           "type": "SYMBOL",
           "name": "if_entry"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "config_shorthand"
         }
       ]
+    },
+    "config_shorthand": {
+      "type": "FIELD",
+      "name": "name",
+      "content": {
+        "type": "SYMBOL",
+        "name": "identifier"
+      }
     },
     "dotted_identifier": {
       "type": "PREC",

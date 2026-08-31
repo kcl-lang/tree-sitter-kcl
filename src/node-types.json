@@ -816,6 +816,10 @@
           "named": true
         },
         {
+          "type": "config_shorthand",
+          "named": true
+        },
+        {
           "type": "config_splat",
           "named": true
         },
@@ -839,6 +843,22 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "config_shorthand",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -2678,11 +2698,11 @@
   },
   {
     "type": "float",
-    "named": false
+    "named": true
   },
   {
     "type": "float",
-    "named": true
+    "named": false
   },
   {
     "type": "for",
