@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-kcl
-        VERSION "0.1.0"
+        VERSION "0.2.0"
         DESCRIPTION "KCL Configration and policy language"
         HOMEPAGE_URL "https://github.com/kcl-lang/tree-sitter-kcl"
         LANGUAGES C)

@@ -1,26 +1,26 @@
 lambda fullname: Person, lastname {
-# ^ keyword
-#        ^ parameter
+# ^ keyword.function
+#        ^ variable.parameter
 #                 ^ type
-#                          ^ parameter
+#                          ^ variable.parameter
     x.name + " " + str(lastname)
     # <- variable
     #  ^ property
     #        ^ string
-    #               ^ function
+    #               ^ function.call
     #                     ^ variable
 }
 
 lambda { fullname: Person, lastname } -> Person {
-# ^ keyword
-#          ^ parameter
+# ^ keyword.function
+#          ^ variable.parameter
 #                   ^ type
-#                           ^ parameter
+#                           ^ variable.parameter
 #                                        ^ type
     x.name + " " + str(lastname)
     # <- variable
     #  ^ property
     #        ^ string
-    #               ^ function
+    #               ^ function.call
     #                     ^ variable
 }

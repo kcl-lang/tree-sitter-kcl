@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - grammar.js
+      - src/**
+      - test/**
+      - queries/**
+      - bindings/**
+      - binding.gyp
+      - tree-sitter.json
+      - .tsqueryrc.json
+      - .github/workflows/ci.yml
+  pull_request:
+    paths:
+      - grammar.js
+      - src/**
+      - test/**
+      - queries/**
+      - bindings/**
+      - binding.gyp
+      - tree-sitter.json
+      - .tsqueryrc.json
+      - .github/workflows/ci.yml
+  workflow_dispatch:
+
+concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test parser
+    runs-on: ${{matrix.os}}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+      - name: Set up tree-sitter
+        uses: tree-sitter/setup-action/cli@v2
+        with:
+          tree-sitter-ref: v0.27.2
+      - name: Run parser tests
+        uses: tree-sitter/parser-test-action@v3
+
+  fuzz:
+    name: Fuzz scanner
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
+      - name: Check for scanner changes
+        id: scanner-check
+        run: |-
+          if git diff --quiet HEAD^ -- src/scanner.c; then
+            printf 'changed=false\n' >> "$GITHUB_OUTPUT"
+          else
+            printf 'changed=true\n' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Run the fuzzer
+        uses: tree-sitter/fuzz-action@v4
+        if: steps.scanner-check.outputs.changed == 'true'
+
+  query:
+    name: Validate queries
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+      - name: Set up tree-sitter
+        uses: tree-sitter/setup-action/cli@v2
+        with:
+          tree-sitter-ref: v0.27.2
+      - name: Build parser
+        # Name the library after the language so ts_query_ls can load it
+        # regardless of the checkout directory's parent folder.
+        run: tree-sitter build -o kcl.so
+      - name: Set up ts_query_ls
+        run: curl -fL https://github.com/ribru17/ts_query_ls/releases/latest/download/ts_query_ls-x86_64-unknown-linux-gnu.tar.gz | tar -xz
+      - name: Check queries
+        run: ./ts_query_ls check -f queries/

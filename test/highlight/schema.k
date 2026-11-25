@@ -1,32 +1,32 @@
 schema Person:
-#^ @keyword
+#^ @keyword.type
 #        ^ type
     age: int = 33
     # ^ variable
-    #     ^ type
+    #     ^ type.builtin
     #          ^ number
 
 schema Employee(Person):
-#^ @keyword
+#^ @keyword.type
 #        ^ type
 #               ^ type
     salary: float = 1000.0
     # ^ variable
-    #       ^ type
-    #               ^ number
+    #       ^ type.builtin
+    #               ^ number.float
 
 protocol DataProtocol:
-#^ @keyword
+#^ @keyword.type
 #         ^ type
     data: str
     # ^ variable
-    #     ^ type
+    #     ^ type.builtin
 
 weather = "sunny"
 day = "wednesday"
 
 rule IsSunny:
-#^ @keyword
+#^ @keyword.type
 #      ^ type
     weather == "sunny"
     # ^ variable
@@ -41,7 +41,7 @@ rule IsWednesday:
     #                     ^ string
 
 rule Main(IsSunny, IsWednesday):
-#^ @keyword
+#^ @keyword.type
 #      ^ type
 #           ^ type
 #                   ^ type

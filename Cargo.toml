@@ -1,12 +1,12 @@
 [package]
 name = "tree-sitter-kcl"
 description = "kcl grammar for the tree-sitter parsing library"
-version = "0.1.0"
+version = "0.2.0"
 keywords = ["incremental", "parsing", "kcl"]
 categories = ["parsing", "text-editors"]
-repository = "https://github.com/tree-sitter/tree-sitter-kcl"
+repository = "https://github.com/kcl-lang/tree-sitter-kcl"
 edition = "2018"
-license = "MIT"
+license = "Apache-2.0"
 
 build = "bindings/rust/build.rs"
 include = [
