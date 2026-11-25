@@ -1,43 +1,5 @@
 [
   {
-    "type": "_compound_stmt",
-    "named": true,
-    "subtypes": [
-      {
-        "type": "check_stmt",
-        "named": true
-      },
-      {
-        "type": "decorators",
-        "named": true
-      },
-      {
-        "type": "if_stmt",
-        "named": true
-      },
-      {
-        "type": "mixin_stmt",
-        "named": true
-      },
-      {
-        "type": "protocol_stmt",
-        "named": true
-      },
-      {
-        "type": "rule_stmt",
-        "named": true
-      },
-      {
-        "type": "schema_index_signature",
-        "named": true
-      },
-      {
-        "type": "schema_stmt",
-        "named": true
-      }
-    ]
-  },
-  {
     "type": "_expr",
     "named": true,
     "subtypes": [
@@ -63,40 +25,6 @@
       },
       {
         "type": "primary_expr",
-        "named": true
-      }
-    ]
-  },
-  {
-    "type": "_simple_stmt",
-    "named": true,
-    "subtypes": [
-      {
-        "type": "_expr",
-        "named": true
-      },
-      {
-        "type": "assert_stmt",
-        "named": true
-      },
-      {
-        "type": "assign_stmt",
-        "named": true
-      },
-      {
-        "type": "aug_assign_stmt",
-        "named": true
-      },
-      {
-        "type": "import_stmt",
-        "named": true
-      },
-      {
-        "type": "type_alias_stmt",
-        "named": true
-      },
-      {
-        "type": "unification_stmt",
         "named": true
       }
     ]
@@ -559,11 +487,63 @@
       "required": false,
       "types": [
         {
-          "type": "_compound_stmt",
+          "type": "_expr",
           "named": true
         },
         {
-          "type": "_simple_stmt",
+          "type": "assert_stmt",
+          "named": true
+        },
+        {
+          "type": "assign_stmt",
+          "named": true
+        },
+        {
+          "type": "aug_assign_stmt",
+          "named": true
+        },
+        {
+          "type": "check_stmt",
+          "named": true
+        },
+        {
+          "type": "decorators",
+          "named": true
+        },
+        {
+          "type": "if_stmt",
+          "named": true
+        },
+        {
+          "type": "import_stmt",
+          "named": true
+        },
+        {
+          "type": "mixin_stmt",
+          "named": true
+        },
+        {
+          "type": "protocol_stmt",
+          "named": true
+        },
+        {
+          "type": "rule_stmt",
+          "named": true
+        },
+        {
+          "type": "schema_index_signature",
+          "named": true
+        },
+        {
+          "type": "schema_stmt",
+          "named": true
+        },
+        {
+          "type": "type_alias_stmt",
+          "named": true
+        },
+        {
+          "type": "unification_stmt",
           "named": true
         }
       ]
@@ -1626,11 +1606,63 @@
       "required": false,
       "types": [
         {
-          "type": "_compound_stmt",
+          "type": "_expr",
           "named": true
         },
         {
-          "type": "_simple_stmt",
+          "type": "assert_stmt",
+          "named": true
+        },
+        {
+          "type": "assign_stmt",
+          "named": true
+        },
+        {
+          "type": "aug_assign_stmt",
+          "named": true
+        },
+        {
+          "type": "check_stmt",
+          "named": true
+        },
+        {
+          "type": "decorators",
+          "named": true
+        },
+        {
+          "type": "if_stmt",
+          "named": true
+        },
+        {
+          "type": "import_stmt",
+          "named": true
+        },
+        {
+          "type": "mixin_stmt",
+          "named": true
+        },
+        {
+          "type": "protocol_stmt",
+          "named": true
+        },
+        {
+          "type": "rule_stmt",
+          "named": true
+        },
+        {
+          "type": "schema_index_signature",
+          "named": true
+        },
+        {
+          "type": "schema_stmt",
+          "named": true
+        },
+        {
+          "type": "type_alias_stmt",
+          "named": true
+        },
+        {
+          "type": "unification_stmt",
           "named": true
         }
       ]
@@ -1642,7 +1674,7 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "basic_type",
@@ -2698,11 +2730,11 @@
   },
   {
     "type": "float",
-    "named": true
+    "named": false
   },
   {
     "type": "float",
-    "named": false
+    "named": true
   },
   {
     "type": "for",
@@ -2767,10 +2799,6 @@
   },
   {
     "type": "not in",
-    "named": false
-  },
-  {
-    "type": "null_assignment",
     "named": false
   },
   {

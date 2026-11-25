@@ -62,6 +62,8 @@ Change the grammar in [./grammar.js](./grammar.js) and regenerate the parser:
 tree-sitter generate
 ```
 
+CI checks that `src/parser.c` matches a generate from tree-sitter CLI 0.27.2, the version in `package.json`.
+
 ### Testing
 
 Add corpus tests in [./test/corpus/](./test/corpus/) or highlight tests in [./test/highlight/](./test/highlight/), then run:
