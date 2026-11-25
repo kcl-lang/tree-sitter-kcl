@@ -2,7 +2,7 @@
 # <- number
 
 3.14
-# <- number
+# <- number.float
 
 "all"
 # <- string

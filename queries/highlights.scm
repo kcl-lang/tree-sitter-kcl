@@ -1,18 +1,15 @@
 (identifier) @variable
 
-; Reset highlighting in string interpolations
-(interpolation) @none
+(import_stmt
+  (dotted_name
+    (identifier) @module))
 
 (import_stmt
   (dotted_name
-    (identifier) @namespace))
+    (identifier) @module)
+  (identifier) @module)
 
-(import_stmt
-  (dotted_name
-    (identifier) @namespace)
-  (identifier) @namespace)
-
-(basic_type) @type
+(basic_type) @type.builtin
 
 (schema_type
   (dotted_name
@@ -20,7 +17,7 @@
 
 (schema_type
   (dotted_name
-    (identifier) @namespace
+    (identifier) @module
     (identifier) @type))
 
 (schema_expr
@@ -30,23 +27,26 @@
   (identifier) @type)
 
 (rule_stmt
-    (identifier) @type)
+  (identifier) @type)
 
 (schema_stmt
   (identifier) @type)
 
 (lambda_expr
-  (typed_parameter (identifier) @parameter))
+  (typed_parameter
+    (identifier) @variable.parameter))
 
 (lambda_expr
-  (identifier) @parameter)
+  (identifier) @variable.parameter)
 
 (selector_expr
   (select_suffix
     (identifier) @property))
 
-(comment) @comment
+(comment) @comment @spell
+
 (string) @string
+
 (escape_sequence) @string.escape
 
 (schema_stmt
@@ -59,45 +59,55 @@
   (identifier) @attribute)
 
 (call_expr
-  function: (identifier) @function)
+  function: (identifier) @function.call)
 
 (call_expr
   function: (selector_expr
     (select_suffix
-      (identifier) @function)))
+      (identifier) @function.call)))
 
-[
-  (integer)
-  (float)
-] @number
+(integer) @number
+
+(float) @number.float
 
 [
   (true)
   (false)
+] @boolean
+
+[
   (none)
   (undefined)
 ] @constant.builtin
 
+"for" @keyword.repeat
+
 [
-  "all"
-  "any"
-  "assert"
-  "as"
-  "check"
   "elif"
   "else"
-  "filter"
-  "for"
   "if"
-  "import"
-  "lambda"
-  "map"
-  "mixin"
+] @keyword.conditional
+
+"lambda" @keyword.function
+
+(quant_op) @keyword.operator
+
+[
   "protocol"
   "rule"
   "schema"
   "type"
-] @keyword
+  "mixin"
+] @keyword.type
+
+"assert" @keyword.debug
+
+[
+  "as"
+  "import"
+] @keyword.import
+
+"check" @keyword
 
 [
   "("
@@ -107,6 +117,15 @@
   "{"
   "}"
 ] @punctuation.bracket
+
+[
+  ","
+  ":"
+  "."
+  "?."
+  "?:"
+  "?"
+] @punctuation.delimiter
 
 (interpolation
   "${" @punctuation.special
@@ -132,15 +151,31 @@
   ">="
   "=="
   "!="
-  "@"
+  "="
+  "+="
+  "-="
+  "*="
+  "**="
+  "/="
+  "//="
+  "%="
+  "<<="
+  ">>="
+  "&="
+  "^="
+  "|="
+  "->"
+] @operator
+
+"@" @attribute
+
+[
   "and"
   "or"
   "not"
   "in"
   "is"
-  "="
-  ":"
-] @operator
+] @keyword.operator
 
 ; second argument is a regex in all regex functions with at least two arguments
 (call_expr
@@ -155,12 +190,13 @@
 
 ; first argument is a regex in 'regex.compile' function
 (call_expr
-  .
   function: (selector_expr
     (identifier) @_regex
     (select_suffix
-      (identifier) @_fn (#eq? @_fn "compile")))
+      (identifier) @_fn))
   arguments: (argument_list
+    .
     (string
       (string_content) @string.regexp))
-  (#eq? @_regex "regex"))
+  (#eq? @_regex "regex")
+  (#eq? @_fn "compile"))

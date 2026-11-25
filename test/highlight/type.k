@@ -1,15 +1,15 @@
 a: int
 # <- variable
-#   ^ type
+#   ^ type.builtin
 
 b: float
-#   ^ type
+#   ^ type.builtin
 
 c: bool
-#   ^ type
+#   ^ type.builtin
 
 d: str
-#   ^ type
+#   ^ type.builtin
 
 e: None
 #   ^ type
